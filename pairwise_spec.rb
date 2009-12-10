@@ -48,17 +48,33 @@ describe "pairwise" do
     end
   end
 
-  it "should generate pairs for three paramters" do
-    data = [{:A => [:A1, :A2]},
-            {:B => [:B1, :B2]},
-            {:C => [:C1 , :C2 , :C3 ]}]
 
-    Pairwise.generate(data).should == [[:A1, :B1, :C1],
-                                       [:A1, :B2, :C2],
-                                       [:A2, :B1, :C3],
-                                       [:A2, :B2, :C1],
-                                       [:A2, :B1, :C2],
-                                       [:A1, :B2, :C3]]
+  context "with dataset with unequal input sizes" do
+    it "should generate pairs for three paramters" do
+      data = [{:A => [:A1, :A2]},
+              {:B => [:B1, :B2]},
+              {:C => [:C1 , :C2 , :C3 ]}]
+
+      Pairwise.generate(data).should == [[:A1, :B1, :C1],
+                                         [:A1, :B2, :C2],
+                                         [:A2, :B1, :C3],
+                                         [:A2, :B2, :C1],
+                                         [:A2, :B1, :C2],
+                                         [:A1, :B2, :C3]]
+    end
   end
 
+  context "with data set with same number of inputs" do
+    it "should generate pairs for three paramters" do
+      data = [{:A => [:A1, :A2]},
+              {:B => [:B1, :B2]},
+              {:C => [:C1 , :C2]}]
+
+      Pairwise.generate(data).should == [[:A1, :B1, :C1],
+                                         [:A1, :B2, :C2],
+                                         [:A2, :B1, :C2],
+                                         [:A2, :B2, :C1]]
+    end
+  end
+  
 end
