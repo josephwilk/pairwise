@@ -1,6 +1,5 @@
 require 'rubygems'
 require 'set'
-require 'ruby-debug'
 
 class Pairwise
 
@@ -117,9 +116,9 @@ class Pairwise
       covered_count
     end
 
-    #TODO: use ruby and sets
     def matches_pair(pair_1, pair_2)
-      pair_1.reduce(true){|matches, pair_value| matches && pair_2.include?(pair_value)}
+      pair_1_set, pair_2_set = Set.new(pair_1), Set.new(pair_2)
+      pair_1_set.subset?(pair_2_set)
     end
 
   end
