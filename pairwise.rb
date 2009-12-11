@@ -11,7 +11,7 @@ class Pairwise
       raise InvalidInput, "Minimum of 2 inputs are required to generate pairwise test set" if inputs.length < 2 || inputs[0].values[0].empty? && inputs[1].values[0].empty?
 
       inputs_without_labels = inputs.map {|input| input.values[0]}
-     
+
       test_set = generate_pairs_between(inputs_without_labels[0], [inputs_without_labels[1]])
       count = 0
       if inputs_without_labels.size > 2
@@ -74,7 +74,7 @@ class Pairwise
     def replace_wild_card(set, replace_with_value)
       set.map{|value| value == :wild_card ? replace_with_value : value}
     end
-    
+
     def generate_pairs_between(parameter_i, inputs)
       pairs = []
       parameter_i.each do |p|
@@ -88,7 +88,7 @@ class Pairwise
     end
 
     def remove_pairs_covered_by(extended_test, pi)
-      pi.select{ |pair| !matches_pair(pair, extended_test)}
+      pi.select{ |pair| !matches_pair?(pair, extended_test)}
     end
 
     def select_value_that_covers_most_pairs(test_value, parameter_i, pi)
@@ -111,12 +111,12 @@ class Pairwise
     def pairs_covered(value, pairs)
       covered_count = 0
       covered = pairs.reduce(0) do |covered, pair|
-        covered_count += 1 if matches_pair(pair, value)
+        covered_count += 1 if matches_pair?(pair, value)
       end
       covered_count
     end
 
-    def matches_pair(pair_1, pair_2)
+    def matches_pair?(pair_1, pair_2)
       pair_1_set, pair_2_set = Set.new(pair_1), Set.new(pair_2)
       pair_1_set.subset?(pair_2_set)
     end
