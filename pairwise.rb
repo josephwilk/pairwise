@@ -6,18 +6,20 @@ class Pairwise
   class InvalidInput < Exception; end
 
   class << self
-
+    
     def generate(inputs)
       raw_inputs = inputs.map {|input| input.values[0]}
-
+      
       raise InvalidInput, "Minimum of 2 inputs are required to generate pairwise test set" unless valid_inputs?(raw_inputs)
 
       test_set = generate_pairs_between(raw_inputs[0], [raw_inputs[1]])
-      count = 0
+      
+      puts :start_set, test_set.inspect
+      
       if raw_inputs.size > 2
         for i in 2..raw_inputs.size-1
-          test_set, pi = ipo_h(test_set, raw_inputs[i], raw_inputs[0..(i-1)])
-          test_set = ipo_v(test_set, pi)
+          test_set, pi = ipo_h(test_set, raw_inputs[i], raw_inputs[0..(i-1)])        
+          test_set = ipo_v(test_set, pi, i)
         end
       end
       test_set
@@ -29,7 +31,6 @@ class Pairwise
       inputs.length >= 2 && !inputs[0].empty? && !inputs[1].empty?
     end
 
-    #TODO: Look at using zip when extending tests
     def ipo_h(test_set, parameter_i, inputs)
       pi = generate_pairs_between(parameter_i, inputs)
       q = parameter_i.size
@@ -48,7 +49,7 @@ class Pairwise
         end
 
         test_set[q..-1] = test_set[q..-1].map do |test|
-          extended_test = select_value_that_covers_most_pairs(test, parameter_i, pi)
+          extended_test = value_that_covers_most_pairs(test, parameter_i, pi)
           pi = remove_pairs_covered_by(extended_test, pi)
           extended_test
         end
@@ -57,15 +58,24 @@ class Pairwise
       [test_set, pi]
     end
 
-    def ipo_v(test_set, pi)
-      new_test_set = []
+    def ipo_v(test_set, pi, i)
+      puts :pi, pi.inspect
 
-      pi.each do |(p1,p2)|
+      new_test_set = []
+      
+      pi.each do |(p1, p2)|
+        puts p1
+        # - as the value of pk
+        # u as the value of pi
         if wild_card_index = contains_wild_card?(new_test_set)
           new_test_set[wild_card_index] = replace_wild_card(new_test_set[wild_card_index], p2)
         else
-          #TODO: need to handle arbitrary set length
-          new_test_set << [p2, :wild_card, p1]
+          new_test = Array.new(i){:wild_card}
+          
+          new_test[i] = p1
+          new_test[0] = p2
+
+          new_test_set << new_test
         end
       end
 
@@ -97,7 +107,7 @@ class Pairwise
       pi.select{ |pair| !matches_pair?(pair, extended_test)}
     end
 
-    def select_value_that_covers_most_pairs(test_value, parameter_i, pi)
+    def value_that_covers_most_pairs(test_value, parameter_i, pi)
       max_value = parameter_i[0]
 
       selected_value = nil

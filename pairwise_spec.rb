@@ -41,6 +41,14 @@ describe "pairwise" do
                                        [:A1, :B1, :C2]]
   end
 
+  it "should generate all pairs for 3 parameters of 2,1,2 values" do
+    data = [{:A => [:A1, :A2]}, {:B => [:B1]}, {:C => [:C1, :C2]}]
+
+    Pairwise.generate(data).should == [[:A1, :B1, :C1],
+                                       [:A2, :B1, :C2],
+                                       [:A1, :B1, :C2]]
+  end
+    
   describe 'ipo horizontal growth' do
     before(:each) do
       @test_pairs = [[:A1, :B1], [:A1, :B2], [:A2, :B1], [:A2, :B2]]
