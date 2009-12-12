@@ -14,10 +14,8 @@ class Pairwise
 
       test_set = generate_pairs_between(raw_inputs[0], [raw_inputs[1]])
       
-      puts :start_set, test_set.inspect
-      
       if raw_inputs.size > 2
-        for i in 2..raw_inputs.size-1
+        for i in 2...raw_inputs.size
           test_set, pi = ipo_h(test_set, raw_inputs[i], raw_inputs[0..(i-1)])        
           test_set = ipo_v(test_set, pi, i)
         end
@@ -59,12 +57,9 @@ class Pairwise
     end
 
     def ipo_v(test_set, pi, i)
-      puts :pi, pi.inspect
-
       new_test_set = []
       
       pi.each do |(p1, p2)|
-        puts p1
         # - as the value of pk
         # u as the value of pi
         if wild_card_index = contains_wild_card?(new_test_set)
