@@ -8,15 +8,15 @@ class Pairwise
   class << self
 
     def generate(inputs)
-      raise InvalidInput, "Minimum of 2 inputs are required to generate pairwise test set" if inputs.length < 2 || inputs[0].values[0].empty? && inputs[1].values[0].empty?
+      raw_inputs = inputs.map {|input| input.values[0]}
 
-      inputs_without_labels = inputs.map {|input| input.values[0]}
+      raise InvalidInput, "Minimum of 2 inputs are required to generate pairwise test set" unless valid_inputs?(raw_inputs)
 
-      test_set = generate_pairs_between(inputs_without_labels[0], [inputs_without_labels[1]])
+      test_set = generate_pairs_between(raw_inputs[0], [raw_inputs[1]])
       count = 0
-      if inputs_without_labels.size > 2
-        for i in 2.. inputs_without_labels.size-1
-          test_set, pi = ipo_h(test_set, inputs_without_labels[i], inputs_without_labels[0..(i-1)])
+      if raw_inputs.size > 2
+        for i in 2..raw_inputs.size-1
+          test_set, pi = ipo_h(test_set, raw_inputs[i], raw_inputs[0..(i-1)])
           test_set = ipo_v(test_set, pi)
         end
       end
@@ -25,26 +25,30 @@ class Pairwise
 
     private
 
+    def valid_inputs?(inputs)
+      inputs.length >= 2 && !inputs[0].empty? && !inputs[1].empty?
+    end
+
     #TODO: Look at using zip when extending tests
     def ipo_h(test_set, parameter_i, inputs)
       pi = generate_pairs_between(parameter_i, inputs)
       q = parameter_i.size
 
       if test_set.size <= q
-        for j in 0..test_set.size do
-          extended_test = test_set[j] << parameter_i[j]
+        test_set.enum_for(:each_with_index).each do |test, j|
+          extended_test = test << parameter_i[j]
           pi = remove_pairs_covered_by(extended_test, pi)
         end
       else
-        for j in 0...q do
+        test_set[0...q].enum_for(:each_with_index).each do |test, j|
           extended_test = test_set[j] << parameter_i[j]
           pi = remove_pairs_covered_by(extended_test, pi)
         end
 
-        for i in q...test_set.size do
-          extended_test = select_value_that_covers_most_pairs(test_set[i], parameter_i, pi)
+        test_set[q..-1] = test_set[q..-1].map do |test|
+          extended_test = select_value_that_covers_most_pairs(test, parameter_i, pi)
           pi = remove_pairs_covered_by(extended_test, pi)
-          test_set[i] = extended_test
+          extended_test
         end
       end
 
