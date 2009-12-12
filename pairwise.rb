@@ -35,14 +35,16 @@ class Pairwise
       q = parameter_i.size
 
       if test_set.size <= q
-        test_set.enum_for(:each_with_index).each do |test, j|
-          extended_test = test << parameter_i[j]
+        test_set = test_set.enum_for(:each_with_index).map do |test, j|
+          extended_test = test + [parameter_i[j]]
           pi = remove_pairs_covered_by(extended_test, pi)
+          extended_test
         end
       else
-        test_set[0...q].enum_for(:each_with_index).each do |test, j|
-          extended_test = test_set[j] << parameter_i[j]
+        test_set[0...q] = test_set[0...q].enum_for(:each_with_index).map do |test, j|
+          extended_test = test_set[j] + [parameter_i[j]]
           pi = remove_pairs_covered_by(extended_test, pi)
+          extended_test
         end
 
         test_set[q..-1] = test_set[q..-1].map do |test|
@@ -100,7 +102,7 @@ class Pairwise
 
       selected_value = nil
       parameter_i.reduce(0) do |most_covered, value|
-        temp_value = test_value.dup + [value]
+        temp_value = test_value + [value]
         covered = pairs_covered(temp_value, pi)
         if covered > most_covered
           selected_value = temp_value
