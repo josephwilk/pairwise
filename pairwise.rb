@@ -107,12 +107,12 @@ class Pairwise
       wild_card_list.rindex(true)
     end
 
-    def generate_pairs_between(parameter_i, inputs, i_index)
+    def generate_pairs_between(parameter_i, inputs, p_index)
       pairs = []
       parameter_i.each do |p|
-        inputs.each_with_index do |input, p_index|
+        inputs.each_with_index do |input, q_index|
           input.each do |q|
-            pairs << TestPair.new(i_index, p_index, p, q)
+            pairs << TestPair.new(p_index, q_index, p, q)
           end
         end
       end
@@ -124,12 +124,10 @@ class Pairwise
     end
 
     def value_that_covers_most_pairs(test_value, parameter_i, pi)
-      max_value = parameter_i[0]
-
       selected_value = nil
       parameter_i.reduce(0) do |most_covered, value|
         temp_value = test_value + [value]
-        covered = pairs_covered(temp_value, pi)
+        covered = pairs_covered_count(temp_value, pi)
         if covered > most_covered
           selected_value = temp_value
           covered
@@ -140,7 +138,7 @@ class Pairwise
       selected_value
     end
 
-    def pairs_covered(value, pairs)
+    def pairs_covered_count(value, pairs)
       covered_count = 0
       covered = pairs.reduce(0) do |covered, pair|
         covered_count += 1 if pair.subset?(value)
