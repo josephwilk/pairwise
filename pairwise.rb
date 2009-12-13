@@ -1,6 +1,8 @@
 require 'rubygems'
 require 'set'
 
+require 'ruby-debug'
+
 class TestPair < Array
   attr_reader :p1_position
   attr_reader :p2_position
@@ -10,6 +12,12 @@ class TestPair < Array
     @p2_position = p2_position
     super([p1, p2])
   end
+
+  def subset?(pair_2)
+    pair_1_set, pair_2_set = Set.new(self), Set.new(pair_2)
+    pair_1_set.subset?(pair_2_set)
+  end
+  
 end
 
 class Pairwise
@@ -71,8 +79,8 @@ class Pairwise
       new_test_set = []
 
       pi.each do |pair|
-        if wild_card_index = replace_wild_card?(new_test_set, pair)
-          new_test_set[wild_card_index] = replace_wild_card(new_test_set[wild_card_index], pair[1])
+        if test_position = replace_wild_card?(new_test_set, pair)
+          new_test_set[test_position][pair.p2_position] = pair[1]
         else
           new_test = Array.new(pair.p1_position){:wild_card}
 
@@ -93,10 +101,6 @@ class Pairwise
       wild_card_list.rindex(true)
     end
 
-    def replace_wild_card(set, replace_with_value)
-      set.map{|value| value == :wild_card ? replace_with_value : value}
-    end
-
     def generate_pairs_between(parameter_i, inputs, i_index)
       pairs = []
       parameter_i.each do |p|
@@ -110,7 +114,7 @@ class Pairwise
     end
 
     def remove_pairs_covered_by(extended_test, pi)
-      pi.select{ |pair| !matches_pair?(pair, extended_test)}
+      pi.reject{|pair| pair.subset?(extended_test)}
     end
 
     def value_that_covers_most_pairs(test_value, parameter_i, pi)
@@ -133,15 +137,12 @@ class Pairwise
     def pairs_covered(value, pairs)
       covered_count = 0
       covered = pairs.reduce(0) do |covered, pair|
-        covered_count += 1 if matches_pair?(pair, value)
+        covered_count += 1 if pair.subset?(value)
       end
       covered_count
     end
 
-    def matches_pair?(pair_1, pair_2)
-      pair_1_set, pair_2_set = Set.new(pair_1), Set.new(pair_2)
-      pair_1_set.subset?(pair_2_set)
-    end
+   
 
   end
 end

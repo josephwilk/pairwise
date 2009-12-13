@@ -82,14 +82,26 @@ describe "pairwise" do
                                          [:A2, :wild_card, :C1],
                                          [:A1, :wild_card, :C2]]
 
-
-
       #[[:A1, :B1, :C1],
       # [:A2, :B1, :C2],
       # [:A1, :B1, :C2],
       # [:A2, :B1, :C2]]
     end
+    
+    it "should generate all pairs for 4 parameters of 2,1,2,2 values" do
+      data = [{:A => [:A1, :A2]}, {:B => [:B1]}, {:C => [:C1, :C2]}, {:D => [:D1, :D2]}]
 
+      Pairwise.generate(data).should == [[:A1, :B1, :C1, :D1],
+                                         [:A2, :B1, :C2, :D2],
+                                         [:A2, :wild_card, :C1, :D1],
+                                         [:A1, :wild_card, :C2, :D1],
+                                         [:A1, :wild_card, :C1, :D2]]
+      #:A1, :B1, :C1, :D1
+      #:A1, :B1, :C2, :D2
+      #:A2, any_value_of_B, :C2, :D1
+      #:A2, :B1, :C1, :D2
+    end
+    
     it "should generate pairs for three paramters" do
       data = [{:A => [:A1, :A2]},
               {:B => [:B1, :B2]},
