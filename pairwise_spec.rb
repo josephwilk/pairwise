@@ -15,8 +15,8 @@ describe "pairwise" do
       lambda{ Pairwise.generate([{:A => [:A1, :A2]}])}.should raise_error(Pairwise::InvalidInput)
     end
   end
-  
-  context "equal size inputs" do  
+
+  context "equal size inputs" do
     it "should generate pairs for 2 parameters of 1 value" do
       data = [{:A => [:A1]}, {:B => [:B1]}]
 
@@ -56,11 +56,22 @@ describe "pairwise" do
     end
 
     it "should generate all pairs for 3 parameters of 1,1,3 values" do
-      data = [{:A => [:A1]}, {:B => [:B1, :B2]}, {:C => [:C1, :C2, :C3]}]
+      data = [{:A => [:A1]}, {:B => [:B1]}, {:C => [:C1, :C2, :C3]}]
 
       Pairwise.generate(data).should == [[:A1, :B1, :C1],
                                          [:A1, :B1, :C2],
                                          [:A1, :B1, :C3]]
+    end
+
+    it "should generate all pairs for 3 parameters of 1,2,3 values" do
+      data = [{:A => [:A1]}, {:B => [:B1, :B2]}, {:C => [:C1, :C2, :C3]}]
+
+      Pairwise.generate(data).should == [[:A1, :B1, :C1],
+                                         [:A1, :B2, :C2],
+                                         [:wild_card, :B2, :C1],
+                                         [:wild_card, :B1, :C2],
+                                         [:A1, :B1, :C3],
+                                         [:wild_card, :B2, :C3]]
     end
 
     it "should generate all pairs for 3 parameters of 2,1,2 values" do
@@ -68,9 +79,17 @@ describe "pairwise" do
 
       Pairwise.generate(data).should == [[:A1, :B1, :C1],
                                          [:A2, :B1, :C2],
-                                         [:A1, :B1, :C2]]
+                                         [:A2, :wild_card, :C1],
+                                         [:A1, :wild_card, :C2]]
+
+
+
+      #[[:A1, :B1, :C1],
+      # [:A2, :B1, :C2],
+      # [:A1, :B1, :C2],
+      # [:A2, :B1, :C2]]
     end
-    
+
     it "should generate pairs for three paramters" do
       data = [{:A => [:A1, :A2]},
               {:B => [:B1, :B2]},
@@ -84,7 +103,7 @@ describe "pairwise" do
                                          [:A1, :B2, :C3]]
     end
   end
-    
+
   describe 'ipo horizontal growth' do
     before(:each) do
       @test_pairs = [[:A1, :B1], [:A1, :B2], [:A2, :B1], [:A2, :B2]]
