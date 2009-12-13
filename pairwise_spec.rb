@@ -15,38 +15,74 @@ describe "pairwise" do
       lambda{ Pairwise.generate([{:A => [:A1, :A2]}])}.should raise_error(Pairwise::InvalidInput)
     end
   end
+  
+  context "equal size inputs" do  
+    it "should generate pairs for 2 parameters of 1 value" do
+      data = [{:A => [:A1]}, {:B => [:B1]}]
 
-  it "should generate pairs for 2 parameters of 1 value" do
-    data = [{:A => [:A1]}, {:B => [:B1]}]
+      Pairwise.generate(data).should == [[:A1, :B1]]
+    end
 
-    Pairwise.generate(data).should == [[:A1, :B1]]
+    it "should generate all pairs for 2 parameters of 2 values" do
+      data = [{:A => [:A1, :A2]}, {:B => [:B1, :B2]}]
+
+      Pairwise.generate(data).should == [[:A1, :B1], [:A1, :B2], [:A2, :B1], [:A2, :B2]]
+    end
+
+    it "should generate all pairs for 3 parameters of 1 value" do
+      data = [{:A => [:A1]}, {:B => [:B1]}, {:C => [:C1]}]
+
+      Pairwise.generate(data).should == [[:A1, :B1, :C1]]
+    end
+
+    it "should generate pairs for three paramters" do
+      data = [{:A => [:A1, :A2]},
+              {:B => [:B1, :B2]},
+              {:C => [:C1 , :C2]}]
+
+      Pairwise.generate(data).should == [[:A1, :B1, :C1],
+                                         [:A1, :B2, :C2],
+                                         [:A2, :B1, :C2],
+                                         [:A2, :B2, :C1]]
+    end
   end
 
-  it "should generate all pairs for 2 parameters of 2 values" do
-    data = [{:A => [:A1, :A2]}, {:B => [:B1, :B2]}]
+  context "unequal inputs" do
+    it "should generate all pairs for 3 parameters of 1,1,2 values" do
+      data = [{:A => [:A1]}, {:B => [:B1]}, {:C => [:C1, :C2]}]
 
-    Pairwise.generate(data).should == [[:A1, :B1], [:A1, :B2], [:A2, :B1], [:A2, :B2]]
-  end
+      Pairwise.generate(data).should == [[:A1, :B1, :C1],
+                                         [:A1, :B1, :C2]]
+    end
 
-  it "should generate all pairs for 3 parameters of 1 value" do
-    data = [{:A => [:A1]}, {:B => [:B1]}, {:C => [:C1]}]
+    it "should generate all pairs for 3 parameters of 1,1,3 values" do
+      data = [{:A => [:A1]}, {:B => [:B1, :B2]}, {:C => [:C1, :C2, :C3]}]
 
-    Pairwise.generate(data).should == [[:A1, :B1, :C1]]
-  end
+      Pairwise.generate(data).should == [[:A1, :B1, :C1],
+                                         [:A1, :B1, :C2],
+                                         [:A1, :B1, :C3]]
+    end
 
-  it "should generate all pairs for 3 parameters of 1,1,2 values" do
-    data = [{:A => [:A1]}, {:B => [:B1]}, {:C => [:C1, :C2]}]
+    it "should generate all pairs for 3 parameters of 2,1,2 values" do
+      data = [{:A => [:A1, :A2]}, {:B => [:B1]}, {:C => [:C1, :C2]}]
 
-    Pairwise.generate(data).should == [[:A1, :B1, :C1],
-                                       [:A1, :B1, :C2]]
-  end
+      Pairwise.generate(data).should == [[:A1, :B1, :C1],
+                                         [:A2, :B1, :C2],
+                                         [:A1, :B1, :C2]]
+    end
+    
+    it "should generate pairs for three paramters" do
+      data = [{:A => [:A1, :A2]},
+              {:B => [:B1, :B2]},
+              {:C => [:C1 , :C2 , :C3 ]}]
 
-  it "should generate all pairs for 3 parameters of 2,1,2 values" do
-    data = [{:A => [:A1, :A2]}, {:B => [:B1]}, {:C => [:C1, :C2]}]
-
-    Pairwise.generate(data).should == [[:A1, :B1, :C1],
-                                       [:A2, :B1, :C2],
-                                       [:A1, :B1, :C2]]
+      Pairwise.generate(data).should == [[:A1, :B1, :C1],
+                                         [:A1, :B2, :C2],
+                                         [:A2, :B1, :C3],
+                                         [:A2, :B2, :C1],
+                                         [:A2, :B1, :C2],
+                                         [:A1, :B2, :C3]]
+    end
   end
     
   describe 'ipo horizontal growth' do
@@ -74,33 +110,4 @@ describe "pairwise" do
       pi.should == [[:C2, :A2], [:C2, :B1], [:C3, :A1], [:C3, :B2]]
     end
   end
-
-  context "with dataset with unequal input sizes" do
-    it "should generate pairs for three paramters" do
-      data = [{:A => [:A1, :A2]},
-              {:B => [:B1, :B2]},
-              {:C => [:C1 , :C2 , :C3 ]}]
-
-      Pairwise.generate(data).should == [[:A1, :B1, :C1],
-                                         [:A1, :B2, :C2],
-                                         [:A2, :B1, :C3],
-                                         [:A2, :B2, :C1],
-                                         [:A2, :B1, :C2],
-                                         [:A1, :B2, :C3]]
-    end
-  end
-
-  context "with data set with same number of inputs" do
-    it "should generate pairs for three paramters" do
-      data = [{:A => [:A1, :A2]},
-              {:B => [:B1, :B2]},
-              {:C => [:C1 , :C2]}]
-
-      Pairwise.generate(data).should == [[:A1, :B1, :C1],
-                                         [:A1, :B2, :C2],
-                                         [:A2, :B1, :C2],
-                                         [:A2, :B2, :C1]]
-    end
-  end
-
 end
