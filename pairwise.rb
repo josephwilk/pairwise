@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'set'
 
+#TODO: Array gives us too much extract specific behaviour required
 class TestPair < Array
   attr_reader :p1_position
   attr_reader :p2_position
