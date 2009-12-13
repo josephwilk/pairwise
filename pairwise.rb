@@ -1,31 +1,6 @@
 require 'rubygems'
 require 'set'
 
-#TODO: Array gives us too much extract specific behaviour required
-class TestPair < Array
-  attr_reader :p1_position
-  attr_reader :p2_position
-
-  def initialize(p1_position, p2_position, p1, p2)
-    @p1_position = p1_position    @p2_position = p2_position
-    super([p1, p2])
-  end
-
-  def p1
-    self[0]
-  end
-
-  def p2
-    self[1]
-  end
-
-  def subset?(pair_2)
-    pair_1_set, pair_2_set = Set.new(self), Set.new(pair_2)
-    pair_1_set.subset?(pair_2_set)
-  end
-  
-end
-
 # A pairwise implementation using the IPO strategy.
 # Based on:
 # http://www.google.co.uk/url?sa=t&source=web&ct=res&cd=1&ved=0CAkQFjAA&url=http%3A%2F%2Franger.uta.edu%2F~ylei%2Fpaper%2Fipo-tse.pdf&ei=RGAlS47KKKCrjAeEgf3YBw&usg=AFQjCNESXLOIUQNQuH1f3qLtU3vkeJ24fg&sig2=MPTr0gkSV0iJewtct11AgA
