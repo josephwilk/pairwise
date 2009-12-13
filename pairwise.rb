@@ -1,8 +1,6 @@
 require 'rubygems'
 require 'set'
 
-require 'ruby-debug'
-
 class TestPair < Array
   attr_reader :p1_position
   attr_reader :p2_position
@@ -11,6 +9,14 @@ class TestPair < Array
     @p1_position = p1_position
     @p2_position = p2_position
     super([p1, p2])
+  end
+
+  def p1
+    self[0]
+  end
+
+  def p2
+    self[1]
   end
 
   def subset?(pair_2)
@@ -50,22 +56,21 @@ class Pairwise
 
     def ipo_h(test_set, parameter_i, inputs)
       pi = generate_pairs_between(parameter_i, inputs, inputs.size)
-      q = parameter_i.size
 
-      if test_set.size <= q
+      if test_set.size <= parameter_i.size
         test_set = test_set.enum_for(:each_with_index).map do |test, j|
           extended_test = test + [parameter_i[j]]
           pi = remove_pairs_covered_by(extended_test, pi)
           extended_test
         end
       else
-        test_set[0...q] = test_set[0...q].enum_for(:each_with_index).map do |test, j|
+        test_set[0...parameter_i.size] = test_set[0...parameter_i.size].enum_for(:each_with_index).map do |test, j|
           extended_test = test_set[j] + [parameter_i[j]]
           pi = remove_pairs_covered_by(extended_test, pi)
           extended_test
         end
 
-        test_set[q..-1] = test_set[q..-1].map do |test|
+        test_set[parameter_i.size..-1] = test_set[parameter_i.size..-1].map do |test|
           extended_test = value_that_covers_most_pairs(test, parameter_i, pi)
           pi = remove_pairs_covered_by(extended_test, pi)
           extended_test
@@ -80,12 +85,12 @@ class Pairwise
 
       pi.each do |pair|
         if test_position = replace_wild_card?(new_test_set, pair)
-          new_test_set[test_position][pair.p2_position] = pair[1]
+          new_test_set[test_position][pair.p2_position] = pair.p2
         else
           new_test = Array.new(pair.p1_position){:wild_card}
 
-          new_test[pair.p1_position] = pair[0]
-          new_test[pair.p2_position] = pair[1]
+          new_test[pair.p1_position] = pair.p1
+          new_test[pair.p2_position] = pair.p2
 
           new_test_set << new_test
         end
@@ -96,7 +101,7 @@ class Pairwise
 
     def replace_wild_card?(test_set, pair)
       wild_card_list = test_set.map do |set|
-        set[pair.p2_position] == :wild_card && set[pair.p1_position] == pair[0]
+        set[pair.p2_position] == :wild_card && set[pair.p1_position] == pair.p1
       end
       wild_card_list.rindex(true)
     end
@@ -141,8 +146,6 @@ class Pairwise
       end
       covered_count
     end
-
-   
 
   end
 end
