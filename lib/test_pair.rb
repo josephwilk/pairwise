@@ -4,7 +4,7 @@ class TestPair < Array
   attr_reader :p2_position
 
   def initialize(p1_position, p2_position, p1, p2)
-    @p1_position = p1_position    @p2_position = p2_position
+    @p1_position, @p2_position = p1_position, p2_position
     super([p1, p2])
   end
 

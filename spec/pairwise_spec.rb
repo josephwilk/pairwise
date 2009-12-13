@@ -1,7 +1,4 @@
-require 'rubygems'
-require 'spec'
-
-require File.dirname(__FILE__) + '/pairwise'
+require File.dirname(__FILE__) + '/spec_helper'
 
 describe "pairwise" do
 
