@@ -40,8 +40,9 @@ class Pairwise
       test_set = generate_pairs_between(raw_inputs[0], [raw_inputs[1]], 0)
 
       if raw_inputs.size > 2
-        for i in 2...raw_inputs.size
-          test_set, pi = ipo_h(test_set, raw_inputs[i], raw_inputs[0..(i-1)])
+        raw_inputs[2..-1].each_with_index do |raw_input, i|
+          i += 2
+          test_set, pi = ipo_h(test_set, raw_input, raw_inputs[0..(i-1)])
           test_set = ipo_v(test_set, pi)
         end
       end
