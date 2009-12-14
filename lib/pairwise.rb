@@ -2,8 +2,7 @@ require 'set'
 require File.dirname(__FILE__) + '/test_pair'
 
 # A pairwise implementation using the IPO strategy.
-# Based on:
-# http://www.google.co.uk/url?sa=t&source=web&ct=res&cd=1&ved=0CAkQFjAA&url=http%3A%2F%2Franger.uta.edu%2F~ylei%2Fpaper%2Fipo-tse.pdf&ei=RGAlS47KKKCrjAeEgf3YBw&usg=AFQjCNESXLOIUQNQuH1f3qLtU3vkeJ24fg&sig2=MPTr0gkSV0iJewtct11AgA
+# Based on: http://ranger.uta.edu/~ylei/paper/ipo-tse.pdf
 class Pairwise
 
   class InvalidInput < Exception; end
