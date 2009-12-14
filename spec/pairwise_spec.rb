@@ -2,6 +2,10 @@ require File.dirname(__FILE__) + '/spec_helper'
 
 describe "pairwise" do
 
+  before(:each) do
+    Kernel.stub!(:rand).and_return(0)
+  end
+  
   context "invalid inputs" do
     it "should be invalid when running with no input" do
       lambda{ Pairwise.generate([]) }.should raise_error(Pairwise::InvalidInput)
@@ -65,10 +69,10 @@ describe "pairwise" do
 
       Pairwise.generate(data).should == [[:A1, :B1, :C1],
                                          [:A1, :B2, :C2],
-                                         [:wild_card, :B2, :C1],
-                                         [:wild_card, :B1, :C2],
+                                         [:A1, :B2, :C1],
+                                         [:A1, :B1, :C2],
                                          [:A1, :B1, :C3],
-                                         [:wild_card, :B2, :C3]]
+                                         [:A1, :B2, :C3]]
     end
 
     it "should generate all pairs for 3 parameters of 2,1,2 values" do
@@ -76,13 +80,14 @@ describe "pairwise" do
 
       Pairwise.generate(data).should == [[:A1, :B1, :C1],
                                          [:A2, :B1, :C2],
-                                         [:A2, :wild_card, :C1],
-                                         [:A1, :wild_card, :C2]]
+                                         [:A2, :B1, :C1],
+                                         [:A1, :B1, :C2]]
 
-      #[[:A1, :B1, :C1],
-      # [:A2, :B1, :C2],
-      # [:A1, :B1, :C2],
-      # [:A2, :B1, :C2]]
+
+      #:A1, :B1, :C1
+      #:A1, :B1, :C2
+      #:A2, :B1, :C1
+      #:A2,any_value_of_B, :C2     
     end
 
     it "should generate all pairs for 4 parameters of 2,1,2,2 values" do
@@ -90,9 +95,9 @@ describe "pairwise" do
 
       Pairwise.generate(data).should == [[:A1, :B1, :C1, :D1],
                                          [:A2, :B1, :C2, :D2],
-                                         [:A2, :wild_card, :C1, :D2],
-                                         [:A1, :wild_card, :C2, :D2],
-                                         [:A2, :wild_card, :C2, :D1]]
+                                         [:A2, :B1, :C1, :D2],
+                                         [:A1, :B1, :C2, :D2],
+                                         [:A2, :B1, :C2, :D1]]
       #:A1, :B1, :C1, :D1
       #:A1, :B1, :C2, :D2
       #:A2, any_value_of_B, :C2, :D1

@@ -24,6 +24,7 @@ class Pairwise
           test_set, pi = ipo_h(test_set, raw_input, raw_inputs[0..(i-1)])
           test_set = ipo_v(test_set, pi)
         end
+        test_set = replace_wild_cards(test_set, raw_inputs)
       end
 
       test_set
@@ -81,6 +82,18 @@ class Pairwise
       test_set + new_test_set
     end
 
+    def replace_wild_cards(test_set, inputs)
+      test_set.map do |test|
+        test.enum_for(:each_with_index).map do |value, index|
+          value == WILD_CARD ? pick_random_value(inputs[index]) : value
+        end
+      end
+    end
+
+    def pick_random_value(values)
+      values[rand(values.size)]
+    end                 
+    
     def replace_wild_card?(test_set, pair)
       wild_card_list = test_set.map do |set|
         set[pair.p2_position] == WILD_CARD && set[pair.p1_position] == pair.p1
