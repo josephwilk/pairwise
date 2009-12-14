@@ -1,4 +1,3 @@
-require 'set'
 require File.dirname(__FILE__) + '/test_pair'
 
 # A pairwise implementation using the IPO strategy.
