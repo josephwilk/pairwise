@@ -7,6 +7,8 @@ class Pairwise
 
   class InvalidInput < Exception; end
 
+  WILD_CARD = :wild_card
+
   class << self
 
     def generate(inputs)
@@ -23,6 +25,7 @@ class Pairwise
           test_set = ipo_v(test_set, pi)
         end
       end
+
       test_set
     end
 
@@ -66,7 +69,7 @@ class Pairwise
         if test_position = replace_wild_card?(new_test_set, pair)
           new_test_set[test_position][pair.p2_position] = pair.p2
         else
-          new_test = Array.new(pair.p1_position){:wild_card}
+          new_test = Array.new(pair.p1_position){WILD_CARD}
 
           new_test[pair.p1_position] = pair.p1
           new_test[pair.p2_position] = pair.p2
@@ -80,7 +83,7 @@ class Pairwise
 
     def replace_wild_card?(test_set, pair)
       wild_card_list = test_set.map do |set|
-        set[pair.p2_position] == :wild_card && set[pair.p1_position] == pair.p1
+        set[pair.p2_position] == WILD_CARD && set[pair.p1_position] == pair.p1
       end
       wild_card_list.rindex(true)
     end
@@ -106,7 +109,7 @@ class Pairwise
       parameter_i.reduce(0) do |most_covered, value|
         temp_value = test_value + [value]
         covered = pairs_covered_count(temp_value, pi)
-        if covered > most_covered
+        if covered >= most_covered
           selected_value = temp_value
           covered
         else
