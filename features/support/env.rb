@@ -55,7 +55,7 @@ class PairwiseWorld
     stderr_file = Tempfile.new('pairwise')
     stderr_file.close
     in_current_dir do
-      IO.popen("#{command} 2> #{stderr_file.path}", 'r') do |io|
+      IO.popen("../bin/#{command} 2> #{stderr_file.path}", 'r') do |io|
         @last_stdout = io.read
       end
 

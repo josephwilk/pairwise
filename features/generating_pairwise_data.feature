@@ -6,9 +6,9 @@ Feature: Generating pairwise data
 Scenario:
   Given I have the yaml file "inputs.yml" containing:
      """
-     media: Image, Video, Music
-     event with image: Football, Basketball, Soccer
-     event without image: Football, Basketball, Soccer
+     media: [Image, Video, Music]
+     event with image: [Football, Basketball, Soccer]
+     event without image: [Football, Basketball, Soccer]
      """
   When I run pairwise inputs.yml
   Then I should see the output
