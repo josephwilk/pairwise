@@ -12,30 +12,28 @@ class Pairwise
 
     def generate(inputs)
       raw_inputs = inputs.map {|input| input.values[0]}
-
       raise InvalidInput, "Minimum of 2 inputs are required to generate pairwise test set" unless valid_inputs?(raw_inputs)
 
       test_set = generate_pairs_between(raw_inputs[0], [raw_inputs[1]], 0)
-
-      if raw_inputs.size > 2
-        raw_inputs[2..-1].each_with_index do |raw_input, i|
-          i += 2
-          test_set, pi = ipo_h(test_set, raw_input, raw_inputs[0..(i-1)])
-          test_set = ipo_v(test_set, pi)
-        end
-        test_set = replace_wild_cards(test_set, raw_inputs)
-      end
-
-      test_set
+      raw_inputs.size > 2 ? ipo(raw_inputs, test_set) : test_set
     end
 
     private
 
+    def ipo(inputs, test_set)
+      inputs[2..-1].each_with_index do |input, i|
+        i += 2
+        test_set, pi = ipo_horizontal(test_set, input, inputs[0..(i-1)])
+        test_set = ipo_vertical(test_set, pi)
+      end
+      replace_wild_cards(test_set, inputs)
+    end
+    
     def valid_inputs?(inputs)
       inputs.length >= 2 && !inputs[0].empty? && !inputs[1].empty?
     end
 
-    def ipo_h(test_set, parameter_i, inputs)
+    def ipo_horizontal(test_set, parameter_i, inputs)
       pi = generate_pairs_between(parameter_i, inputs, inputs.size)
 
       if test_set.size <= parameter_i.size
@@ -61,7 +59,7 @@ class Pairwise
       [test_set, pi]
     end
 
-    def ipo_v(test_set, pi)
+    def ipo_vertical(test_set, pi)
       new_test_set = []
 
       pi.each do |pair|

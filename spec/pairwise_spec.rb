@@ -126,7 +126,7 @@ describe "pairwise" do
     end
 
     it "should return pairs extended with C's inputs" do
-      test_set, _ = Pairwise.send(:ipo_h, @test_pairs, @data[2], @data[0..1])
+      test_set, _ = Pairwise.send(:ipo_horizontal, @test_pairs, @data[2], @data[0..1])
 
       test_set.should == [[:A1, :B1, :C1],
                           [:A1, :B2, :C2],
@@ -135,7 +135,7 @@ describe "pairwise" do
     end
 
     it "should return all the uncovered pairs" do
-      _, pi = Pairwise.send(:ipo_h, @test_pairs, @data[2], @data[0..1])
+      _, pi = Pairwise.send(:ipo_horizontal, @test_pairs, @data[2], @data[0..1])
 
       # We are getting the uncovered pairs in reverse
       #pi.should == [[:A2, :C2],[:A1, :C3],[:B1, :C2],[:B2, :C3]]
