@@ -123,11 +123,10 @@ module Pairwise
     end
 
     def pairs_covered_count(value, pairs)
-      covered_count = 0
-      covered = pairs.reduce(0) do |covered, pair|
+      pairs.reduce(0) do |covered_count, pair|
         covered_count += 1 if pair.subset?(value)
+        covered_count
       end
-      covered_count
     end
   end
 end
