@@ -72,6 +72,13 @@ module Pairwise
       test_set + new_test_set
     end
 
+    def replace_wild_card?(test_set, pair)
+      wild_card_list = test_set.map do |set|
+        set[pair.p2_position] == WILD_CARD && set[pair.p1_position] == pair.p1
+      end
+      wild_card_list.rindex(true)
+    end
+
     def replace_wild_cards(test_set)
       test_set.map do |test|
         test.enum_for(:each_with_index).map do |value, index|
@@ -82,13 +89,6 @@ module Pairwise
 
     def pick_random_value(values)
       values[rand(values.size)]
-    end
-
-    def replace_wild_card?(test_set, pair)
-      wild_card_list = test_set.map do |set|
-        set[pair.p2_position] == WILD_CARD && set[pair.p1_position] == pair.p1
-      end
-      wild_card_list.rindex(true)
     end
 
     def generate_pairs_between(parameter_i, inputs, p_index)
