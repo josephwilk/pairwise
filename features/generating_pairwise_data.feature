@@ -23,5 +23,7 @@ Scenario:
     |Soccer|Football|Image|
     |Soccer|Basketball|Music|
     |Soccer|Soccer|Music|
+    |:wild_card|Soccer|Image|
+    |:wild_card|Football|Video|
 
     """
