@@ -1,19 +1,18 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
-describe "pairwise" do
-
+describe Pairwise do
   before(:each) do
     Kernel.stub!(:rand).and_return(0)
   end
-  
+
   context "invalid inputs" do
     it "should be invalid when running with no input" do
-      lambda{ Pairwise.generate([]) }.should raise_error(Pairwise::InvalidInput)
-      lambda{ Pairwise.generate([{:A => []}]) }.should raise_error(Pairwise::InvalidInput)
+      lambda{ Pairwise.test_set([]) }.should raise_error(Pairwise::InvalidInput)
+      lambda{ Pairwise.test_set([{:A => []}]) }.should raise_error(Pairwise::InvalidInput)
     end
 
     it "should be invalid when running with only 1 input" do
-      lambda{ Pairwise.generate([{:A => [:A1, :A2]}])}.should raise_error(Pairwise::InvalidInput)
+      lambda{ Pairwise.test_set([{:A => [:A1, :A2]}])}.should raise_error(Pairwise::InvalidInput)
     end
   end
 
@@ -21,19 +20,19 @@ describe "pairwise" do
     it "should generate pairs for 2 parameters of 1 value" do
       data = [{:A => [:A1]}, {:B => [:B1]}]
 
-      Pairwise.generate(data).should == [[:A1, :B1]]
+      Pairwise.test_set(data).should == [[:A1, :B1]]
     end
 
     it "should generate all pairs for 2 parameters of 2 values" do
       data = [{:A => [:A1, :A2]}, {:B => [:B1, :B2]}]
 
-      Pairwise.generate(data).should == [[:A1, :B1], [:A1, :B2], [:A2, :B1], [:A2, :B2]]
+      Pairwise.test_set(data).should == [[:A1, :B1], [:A1, :B2], [:A2, :B1], [:A2, :B2]]
     end
 
     it "should generate all pairs for 3 parameters of 1 value" do
       data = [{:A => [:A1]}, {:B => [:B1]}, {:C => [:C1]}]
 
-      Pairwise.generate(data).should == [[:A1, :B1, :C1]]
+      Pairwise.test_set(data).should == [[:A1, :B1, :C1]]
     end
 
     it "should generate pairs for three paramters" do
@@ -41,7 +40,7 @@ describe "pairwise" do
               {:B => [:B1, :B2]},
               {:C => [:C1 , :C2]}]
 
-      Pairwise.generate(data).should == [[:A1, :B1, :C1],
+      Pairwise.test_set(data).should == [[:A1, :B1, :C1],
                                          [:A1, :B2, :C2],
                                          [:A2, :B1, :C2],
                                          [:A2, :B2, :C1]]
@@ -52,14 +51,14 @@ describe "pairwise" do
     it "should generate all pairs for 3 parameters of 1,1,2 values" do
       data = [{:A => [:A1]}, {:B => [:B1]}, {:C => [:C1, :C2]}]
 
-      Pairwise.generate(data).should == [[:A1, :B1, :C1],
+      Pairwise.test_set(data).should == [[:A1, :B1, :C1],
                                          [:A1, :B1, :C2]]
     end
 
     it "should generate all pairs for 3 parameters of 1,1,3 values" do
       data = [{:A => [:A1]}, {:B => [:B1]}, {:C => [:C1, :C2, :C3]}]
 
-      Pairwise.generate(data).should == [[:A1, :B1, :C1],
+      Pairwise.test_set(data).should == [[:A1, :B1, :C1],
                                          [:A1, :B1, :C2],
                                          [:A1, :B1, :C3]]
     end
@@ -67,7 +66,7 @@ describe "pairwise" do
     it "should generate all pairs for 3 parameters of 1,2,3 values" do
       data = [{:A => [:A1]}, {:B => [:B1, :B2]}, {:C => [:C1, :C2, :C3]}]
 
-      Pairwise.generate(data).should == [[:A1, :B1, :C1],
+      Pairwise.test_set(data).should == [[:A1, :B1, :C1],
                                          [:A1, :B2, :C2],
                                          [:A1, :B2, :C1],
                                          [:A1, :B1, :C2],
@@ -78,7 +77,7 @@ describe "pairwise" do
     it "should generate all pairs for 3 parameters of 2,1,2 values" do
       data = [{:A => [:A1, :A2]}, {:B => [:B1]}, {:C => [:C1, :C2]}]
 
-      Pairwise.generate(data).should == [[:A1, :B1, :C1],
+      Pairwise.test_set(data).should == [[:A1, :B1, :C1],
                                          [:A2, :B1, :C2],
                                          [:A2, :B1, :C1],
                                          [:A1, :B1, :C2]]
@@ -87,13 +86,13 @@ describe "pairwise" do
       #:A1, :B1, :C1
       #:A1, :B1, :C2
       #:A2, :B1, :C1
-      #:A2,any_value_of_B, :C2     
+      #:A2,any_value_of_B, :C2
     end
 
     it "should generate all pairs for 4 parameters of 2,1,2,2 values" do
       data = [{:A => [:A1, :A2]}, {:B => [:B1]}, {:C => [:C1, :C2]}, {:D => [:D1, :D2]}]
 
-      Pairwise.generate(data).should == [[:A1, :B1, :C1, :D1],
+      Pairwise.test_set(data).should == [[:A1, :B1, :C1, :D1],
                                          [:A2, :B1, :C2, :D2],
                                          [:A2, :B1, :C1, :D2],
                                          [:A1, :B1, :C2, :D2],
@@ -109,7 +108,7 @@ describe "pairwise" do
               {:B => [:B1, :B2]},
               {:C => [:C1 , :C2 , :C3 ]}]
 
-      Pairwise.generate(data).should == [[:A1, :B1, :C1],
+      Pairwise.test_set(data).should == [[:A1, :B1, :C1],
                                          [:A1, :B2, :C2],
                                          [:A2, :B1, :C3],
                                          [:A2, :B2, :C1],
@@ -118,29 +117,4 @@ describe "pairwise" do
     end
   end
 
-  describe 'ipo horizontal growth' do
-    before(:each) do
-      @test_pairs = [[:A1, :B1], [:A1, :B2], [:A2, :B1], [:A2, :B2]]
-
-      @data = [[:A1, :A2],[:B1, :B2],[:C1 , :C2 , :C3 ]]
-    end
-
-    it "should return pairs extended with C's inputs" do
-      test_set, _ = Pairwise.send(:ipo_horizontal, @test_pairs, @data[2], @data[0..1])
-
-      test_set.should == [[:A1, :B1, :C1],
-                          [:A1, :B2, :C2],
-                          [:A2, :B1, :C3],
-                          [:A2, :B2, :C1]]
-    end
-
-    it "should return all the uncovered pairs" do
-      _, pi = Pairwise.send(:ipo_horizontal, @test_pairs, @data[2], @data[0..1])
-
-      # We are getting the uncovered pairs in reverse
-      #pi.should == [[:A2, :C2],[:A1, :C3],[:B1, :C2],[:B2, :C3]]
-      # Cheat and check we get the list in reverse
-      pi.should == [[:C2, :A2], [:C2, :B1], [:C3, :A1], [:C3, :B2]]
-    end
-  end
 end
