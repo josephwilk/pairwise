@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'tempfile'
 require 'spec/expectations'
+require "spec/mocks"
 require 'fileutils'
 require 'forwardable'
 
