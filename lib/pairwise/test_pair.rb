@@ -1,5 +1,3 @@
-require 'set'
-
 #TODO: Array gives us too much extract specific behaviour required
 module Pairwise
   class TestPair < Array
@@ -19,9 +17,9 @@ module Pairwise
       self[1]
     end
 
-    def subset?(pair_2)
-      pair_1_set, pair_2_set = Set.new(self), Set.new(pair_2)
-      pair_1_set.subset?(pair_2_set)
+    def covered_by?(pair_2)
+      pair_2[@p1_position] == self[0] &&
+      pair_2[@p2_position] == self[1]
     end
 
   end

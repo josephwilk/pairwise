@@ -20,10 +20,8 @@ Scenario:
     |Basketball|Football|Music|
     |Basketball|Basketball|Image|
     |Basketball|Soccer|Video|
-    |Soccer|Football|Image|
+    |Soccer|Football|Video|
     |Soccer|Basketball|Music|
-    |Soccer|Soccer|Music|
-    |Football|Soccer|Image|
-    |Football|Football|Video|
+    |Soccer|Soccer|Image|
 
     """

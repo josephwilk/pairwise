@@ -104,7 +104,7 @@ module Pairwise
     end
 
     def remove_pairs_covered_by(extended_input_set, pi)
-      pi.reject{|pair| pair.subset?(extended_input_set)}
+      pi.reject{|pair| pair.covered_by?(extended_input_set)}
     end
 
     def value_that_covers_most_pairs(input_set, parameter_i, pi)
@@ -124,7 +124,7 @@ module Pairwise
 
     def pairs_covered_count(input_set, pairs)
       pairs.reduce(0) do |covered_count, pair|
-        covered_count += 1 if pair.subset?(input_set)
+        covered_count += 1 if pair.covered_by?(input_set)
         covered_count
       end
     end
