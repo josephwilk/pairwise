@@ -9,3 +9,7 @@ end
 Then /^I should see the output$/ do |text|
   last_stdout.should == text
 end
+
+Then /^I should see in the output$/ do |string|
+  last_stdout.should include(string)
+end

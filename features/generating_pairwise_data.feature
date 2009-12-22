@@ -3,6 +3,13 @@ Feature: Generating pairwise data
   As a tester
   I want a set of tests which is smaller than all the possible combinations of my specified inputs
 
+Scenario: No input file specified
+  When I run pairwise
+  Then I should see in the output
+  """
+  Usage: pairwise [options] FILE.yml
+  """
+
 Scenario: Ordered yaml inputs
   Given I have the yaml file "inputs.yml" containing:
     """
