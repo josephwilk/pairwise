@@ -3,9 +3,15 @@ $:.unshift(File.dirname(__FILE__)) unless
 
 require 'pairwise/test_pair'
 require 'pairwise/builder'
+require 'pairwise/cli'
+
+require 'yaml'
 
 module Pairwise
   class InvalidInput < Exception; end
+
+  version       = YAML.load_file(File.dirname(__FILE__) + '/../VERSION.yml')
+  VERSION       = [version[:major], version[:minor], version[:patch], version[:build]].compact.join('.')
 
   class << self
     def test_set(inputs)
