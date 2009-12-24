@@ -3,6 +3,7 @@ $:.unshift(File.dirname(__FILE__)) unless
 
 require 'pairwise/test_pair'
 require 'pairwise/builder'
+require 'pairwise/formatter'
 require 'pairwise/cli'
 
 require 'yaml'

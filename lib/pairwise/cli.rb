@@ -10,6 +10,7 @@ module Pairwise
 
     def initialize(args, out = STDOUT)
       @args, @out = args, out
+      @formatter = Formatter::Cucumber.new(@out)
     end
 
     def parse!
@@ -38,7 +39,8 @@ module Pairwise
       input_data, input_labels = *load_and_parse_input_file!
 
       test_set = Pairwise.test_set(input_data)
-      display(test_set, input_labels)
+
+      @formatter.display(test_set, input_labels)
     end
 
     private
@@ -65,18 +67,5 @@ module Pairwise
       inputs.map{|input| input.keys}.flatten
     end
 
-    def display(test_data, inputs)
-      @out.print "|"
-      inputs.each do |key|
-        @out.print key + "|"
-      end
-      puts
-
-      test_data.each do |data|
-        @out.print "|"
-        data.each {|datum| @out.print datum + "|"}
-        @out.puts
-      end
-    end
   end
 end
