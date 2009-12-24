@@ -4,7 +4,7 @@ module Pairwise
   class Cli
     class << self
       def execute(args)
-        new(args).execute
+        new(args).execute!
       end
     end
 
@@ -32,21 +32,28 @@ module Pairwise
       @input_file = @args[0] unless @args.empty?
     end
 
-    def execute
+    def execute!
       parse!
       exit_with_help if @input_file.nil? || @input_file.empty?
+      input_data, input_labels = *load_and_parse_input_file!
 
-      inputs = YAML.load_file(@input_file)
-      inputs = hash_inputs_to_list(inputs) if inputs.is_a?(Hash)
-
-      test_set = Pairwise.test_set(inputs)
-      display(test_set, input_names(inputs))
+      test_set = Pairwise.test_set(input_data)
+      display(test_set, input_labels)
     end
 
     private
     def exit_with_help
       @output.puts @args.options.help
       Kernel.exit(0)
+    end
+
+    def load_and_parse_input_file!
+      inputs = YAML.load_file(@input_file)
+      inputs = hash_inputs_to_list(inputs) if inputs.is_a?(Hash)
+      raw_inputs = inputs.map {|input| input.values[0]}
+      input_labels = input_names(inputs)
+
+      [raw_inputs, input_labels]
     end
 
     def hash_inputs_to_list(inputs_hash)
