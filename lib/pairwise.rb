@@ -21,7 +21,14 @@ module Pairwise
 
     private
     def valid?(inputs)
-      inputs.length >= 2 && !inputs[0].empty? && !inputs[1].empty?
+      array_of_arrays?(inputs) &&
+        inputs.length >= 2 &&
+        !inputs[0].empty? && !inputs[1].empty?
+
+    end
+
+    def array_of_arrays?(data)
+      data.reject{|datum| datum.kind_of?(Array)}.empty?
     end
 
   end

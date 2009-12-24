@@ -13,6 +13,10 @@ describe Pairwise do
     it "should be invalid when running with only 1 input" do
       lambda{ Pairwise.test_set([[:A1, :A2]])}.should raise_error(Pairwise::InvalidInputData)
     end
+
+    it "should be invalid when running with a single list input" do
+      lambda{ Pairwise.test_set([:A1, :A2])}.should raise_error(Pairwise::InvalidInputData)
+    end
   end
 
   context "with valid inputs" do

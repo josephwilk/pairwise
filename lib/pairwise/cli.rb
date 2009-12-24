@@ -8,8 +8,8 @@ module Pairwise
       end
     end
 
-    def initialize(args, output = STDOUT)
-      @args, @output = args, output
+    def initialize(args, out = STDOUT)
+      @args, @out = args, out
     end
 
     def parse!
@@ -21,7 +21,7 @@ module Pairwise
           ].join("\n")
 
         opts.on_tail("--version", "Show version.") do
-          @output.puts Pairwise::VERSION
+          @out.puts Pairwise::VERSION
           Kernel.exit(0)
         end
         opts.on_tail("-h", "--help", "You're looking at it.") do
@@ -43,13 +43,14 @@ module Pairwise
 
     private
     def exit_with_help
-      @output.puts @args.options.help
+      @out.puts @args.options.help
       Kernel.exit(0)
     end
 
     def load_and_parse_input_file!
       inputs = YAML.load_file(@input_file)
       inputs = hash_inputs_to_list(inputs) if inputs.is_a?(Hash)
+
       raw_inputs = inputs.map {|input| input.values[0]}
       input_labels = input_names(inputs)
 
@@ -65,16 +66,16 @@ module Pairwise
     end
 
     def display(test_data, inputs)
-      print "|"
+      @out.print "|"
       inputs.each do |key|
-        print key + "|"
+        @out.print key + "|"
       end
       puts
 
       test_data.each do |data|
-        print "|"
-        data.each {|datum| print datum + "|"}
-        puts
+        @out.print "|"
+        data.each {|datum| @out.print datum + "|"}
+        @out.puts
       end
     end
   end
