@@ -15,7 +15,7 @@ module Pairwise
   VERSION = [version[:major], version[:minor], version[:patch], version[:build]].compact.join('.')
 
   class << self
-    def test_set(inputs)
+    def combinations(inputs)
       raise InvalidInputData, "Minimum of 2 inputs are required to generate pairwise test set" unless valid?(inputs)
       Pairwise::Builder.new(inputs).build
     end
