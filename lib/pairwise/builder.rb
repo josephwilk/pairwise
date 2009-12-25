@@ -1,4 +1,4 @@
-# A pairwise implementation using the IPO strategy.
+# A pairwise implementation using the in-parameter-order (IPO) strategy.
 # Based on: http://ranger.uta.edu/~ylei/paper/ipo-tse.pdf
 module Pairwise
   class Builder
@@ -12,21 +12,21 @@ module Pairwise
 
     def build
       input_sets = generate_pairs_between(@inputs[0], [@inputs[1]], 0)
-      @inputs.size > 2 ? ipo(input_sets) : input_sets
+      @inputs.size > 2 ? in_parameter_order_generation(input_sets) : input_sets
     end
 
     private
 
-    def ipo(input_sets)
+    def in_parameter_order_generation(input_sets)
       @inputs[2..-1].each_with_index do |input_set, i|
         i += 2
-        input_sets, pi = ipo_horizontal(input_sets, input_set, @inputs[0..(i-1)])
-        input_sets = ipo_vertical(input_sets, pi)
+        input_sets, pi = horizontal_growth(input_sets, input_set, @inputs[0..(i-1)])
+        input_sets = vertical_growth(input_sets, pi)
       end
       replace_wild_cards(input_sets)
     end
 
-    def ipo_horizontal(input_sets, parameter_i, inputs)
+    def horizontal_growth(input_sets, parameter_i, inputs)
       pi = generate_pairs_between(parameter_i, inputs, inputs.size)
 
       if input_sets.size <= parameter_i.size
@@ -52,7 +52,7 @@ module Pairwise
       [input_sets, pi]
     end
 
-    def ipo_vertical(input_sets, pi)
+    def vertical_growth(input_sets, pi)
       new_input_sets = []
 
       pi.each do |pair|
