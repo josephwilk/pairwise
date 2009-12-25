@@ -1,25 +1,23 @@
-#TODO: Array gives us too much extract specific behaviour required
+require 'forwardable'
+
 module Pairwise
-  class TestPair < Array
-    attr_reader :p1_position
-    attr_reader :p2_position
+  class TestPair
+    extend Forwardable
+
+    attr_reader :p1_position, :p2_position
+    attr_reader :p1, :p2
+
+    def_delegators :@pair, :+, :inspect, :==
 
     def initialize(p1_position, p2_position, p1, p2)
+      @p1, @p2 = p1, p2
       @p1_position, @p2_position = p1_position, p2_position
-      super([p1, p2])
+      @pair = [@p1, @p2]
     end
 
-    def p1
-      self[0]
-    end
-
-    def p2
-      self[1]
-    end
-
-    def covered_by?(pair_2)
-      pair_2[@p1_position] == self[0] &&
-      pair_2[@p2_position] == self[1]
+    def covered_by?(test_pair)
+      test_pair[@p1_position] == @p1 &&
+      test_pair[@p2_position] == @p2
     end
 
   end
