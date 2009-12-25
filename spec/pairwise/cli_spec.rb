@@ -20,6 +20,14 @@ module Pairwise
       yield
     end
 
+    context "--help" do
+      it "displays usage" do
+        after_parsing('--help') do
+          output_stream.string.should =~ /Usage: pairwise \[options\] FILE\.yml/
+        end
+      end
+    end
+
     context '--version' do
       it "displays Pairwise's version" do
         after_parsing('--version') do
