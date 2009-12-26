@@ -59,12 +59,7 @@ module Pairwise
         if test_position = replace_wild_card?(new_input_lists, pair)
           new_input_lists[test_position][pair.p2_position] = pair.p2
         else
-          new_input_list = Array.new(pair.p1_position){WILD_CARD}
-
-          new_input_list[pair.p1_position] = pair.p1
-          new_input_list[pair.p2_position] = pair.p2
-
-          new_input_lists << new_input_list
+          new_input_lists << pair.create_input_list(WILD_CARD)
         end
       end
 

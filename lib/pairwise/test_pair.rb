@@ -20,5 +20,13 @@ module Pairwise
       test_pair[@p2_position] == @p2
     end
 
+    def create_input_list(default)
+      new_input_list = Array.new(@p1_position){default}
+
+      new_input_list[@p1_position] = @p1
+      new_input_list[@p2_position] = @p2
+      new_input_list
+    end
+
   end
 end
