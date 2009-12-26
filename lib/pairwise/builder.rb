@@ -54,23 +54,16 @@ module Pairwise
     def vertical_growth(input_lists, pi)
       new_input_lists = []
 
-      pi.each do |pair|
+      pi.each do |uncovered_pair|
         #TODO: Decided if we should replace all matches or single matches?
-        if test_position = replace_wild_card?(new_input_lists, pair)
-          new_input_lists[test_position][pair.p2_position] = pair.p2
+        if test_position = uncovered_pair.replaceable_wild_card?(new_input_lists)
+          new_input_lists[test_position] = uncovered_pair.replace_wild_card(new_input_lists[test_position])
         else
-          new_input_lists << pair.create_input_list(WILD_CARD)
+          new_input_lists << uncovered_pair.create_input_list
         end
       end
 
       input_lists + new_input_lists
-    end
-
-    def replace_wild_card?(input_lists, pair)
-      wild_card_list = input_lists.map do |input_list|
-        input_list[pair.p2_position] == WILD_CARD && input_list[pair.p1_position] == pair.p1
-      end
-      wild_card_list.rindex(true)
     end
 
     def replace_wild_cards(input_lists)
