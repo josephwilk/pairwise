@@ -11,7 +11,7 @@ module Pairwise
 
     def build
       input_lists = generate_pairs_between(@inputs[0], [@inputs[1]], 0)
-      @inputs.size > 2 ? in_parameter_order_generation(input_lists) : input_lists
+      @inputs.size > 2 ? in_parameter_order_generation(input_lists) : input_lists.map{|list| list.to_a}
     end
 
     private

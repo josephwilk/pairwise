@@ -11,7 +11,7 @@ describe Pairwise do
     end
 
     it "should be invalid when running with only 1 input" do
-      lambda{ Pairwise.combinations([[:A1, :A2]])}.should raise_error(Pairwise::InvalidInputData)
+      lambda{ Pairwise.combinations([:A1, :A2])}.should raise_error(Pairwise::InvalidInputData)
     end
 
     it "should be invalid when running with a single list input" do
@@ -24,19 +24,19 @@ describe Pairwise do
       it "should generate pairs for 2 parameters of 1 value" do
         data = [[:A1], [:B1]]
 
-        Pairwise.combinations(data).should == [[:A1, :B1]]
+        Pairwise.combinations(*data).should == [[:A1, :B1]]
       end
 
       it "should generate all pairs for 2 parameters of 2 values" do
         data = [[:A1, :A2], [:B1, :B2]]
 
-        Pairwise.combinations(data).should == [[:A1, :B1], [:A1, :B2], [:A2, :B1], [:A2, :B2]]
+        Pairwise.combinations(*data).should == [[:A1, :B1], [:A1, :B2], [:A2, :B1], [:A2, :B2]]
       end
 
       it "should generate all pairs for 3 parameters of 1 value" do
         data = [[:A1], [:B1], [:C1]]
 
-        Pairwise.combinations(data).should == [[:A1, :B1, :C1]]
+        Pairwise.combinations(*data).should == [[:A1, :B1, :C1]]
       end
 
       it "should generate pairs for three paramters" do
@@ -44,7 +44,7 @@ describe Pairwise do
                 [:B1, :B2],
                 [:C1 , :C2]]
 
-        Pairwise.combinations(data).should == [[:A1, :B1, :C1],
+        Pairwise.combinations(*data).should == [[:A1, :B1, :C1],
                                            [:A1, :B2, :C2],
                                            [:A2, :B1, :C2],
                                            [:A2, :B2, :C1]]
@@ -55,14 +55,14 @@ describe Pairwise do
       it "should generate all pairs for 3 parameters of 1,1,2 values" do
         data = [[:A1], [:B1], [:C1, :C2]]
 
-        Pairwise.combinations(data).should == [[:A1, :B1, :C1],
+        Pairwise.combinations(*data).should == [[:A1, :B1, :C1],
                                            [:A1, :B1, :C2]]
       end
 
       it "should generate all pairs for 3 parameters of 1,1,3 values" do
         data = [[:A1], [:B1], [:C1, :C2, :C3]]
 
-        Pairwise.combinations(data).should == [[:A1, :B1, :C1],
+        Pairwise.combinations(*data).should == [[:A1, :B1, :C1],
                                            [:A1, :B1, :C2],
                                            [:A1, :B1, :C3]]
       end
@@ -70,7 +70,7 @@ describe Pairwise do
       it "should generate all pairs for 3 parameters of 1,2,3 values" do
         data = [[:A1], [:B1, :B2], [:C1, :C2, :C3]]
 
-        Pairwise.combinations(data).should == [[:A1, :B1, :C1],
+        Pairwise.combinations(*data).should == [[:A1, :B1, :C1],
                                            [:A1, :B2, :C2],
                                            [:A1, :B2, :C1],
                                            [:A1, :B1, :C2],
@@ -81,7 +81,7 @@ describe Pairwise do
       it "should generate all pairs for 3 parameters of 2,1,2 values" do
         data = [[:A1, :A2], [:B1], [:C1, :C2]]
 
-        Pairwise.combinations(data).should == [[:A1, :B1, :C1],
+        Pairwise.combinations(*data).should == [[:A1, :B1, :C1],
                                            [:A2, :B1, :C2],
                                            [:A2, :B1, :C1],
                                            [:A1, :B1, :C2]]
@@ -96,7 +96,7 @@ describe Pairwise do
       it "should generate all pairs for 4 parameters of 2,1,2,2 values" do
         data = [[:A1, :A2], [:B1], [:C1, :C2], [:D1, :D2]]
 
-        Pairwise.combinations(data).should == [[:A1, :B1, :C1, :D1],
+        Pairwise.combinations(*data).should == [[:A1, :B1, :C1, :D1],
                                            [:A2, :B1, :C2, :D2],
                                            [:A2, :B1, :C1, :D2],
                                            [:A1, :B1, :C2, :D2],
@@ -112,7 +112,7 @@ describe Pairwise do
                 [:B1, :B2],
                 [:C1 , :C2 , :C3 ]]
 
-        Pairwise.combinations(data).should == [[:A1, :B1, :C1],
+        Pairwise.combinations(*data).should == [[:A1, :B1, :C1],
                                            [:A1, :B2, :C2],
                                            [:A2, :B1, :C3],
                                            [:A2, :B2, :C1],

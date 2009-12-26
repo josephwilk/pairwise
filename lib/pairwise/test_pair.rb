@@ -7,7 +7,7 @@ module Pairwise
     attr_reader :p1_position, :p2_position
     attr_reader :p1, :p2
 
-    def_delegators :@pair, :+, :inspect, :==
+    def_delegators :@pair, :+, :inspect, :to_a, :==
 
     def initialize(p1_position, p2_position, p1, p2)
       @p1, @p2 = p1, p2

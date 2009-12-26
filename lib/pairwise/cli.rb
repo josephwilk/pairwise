@@ -38,7 +38,7 @@ module Pairwise
       exit_with_help if @input_file.nil? || @input_file.empty?
       input_data, input_labels = *load_and_parse_input_file!
 
-      @formatter.display(Pairwise.combinations(input_data), input_labels)
+      @formatter.display(Pairwise.combinations(*input_data), input_labels)
     end
 
     private
