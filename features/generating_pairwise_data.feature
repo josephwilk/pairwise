@@ -55,3 +55,21 @@ Scenario: Unorderd yaml inputs
     | Music | Soccer              | Football         |
 
     """
+
+Scenario: Not replacing wild cards
+  Given I have the yaml file "inputs.yml" containing:
+  """
+  - A: [A1]
+  - B: [B1, B2]
+  - C: [C1, C2]
+  """
+  When I run pairwise inputs.yml --keep-wild-cards
+  Then I should see the output
+  """
+  | A         | B  | C  |
+  | A1        | B1 | C1 |
+  | A1        | B2 | C2 |
+  | wild_card | B2 | C1 |
+  | wild_card | B1 | C2 |
+
+  """

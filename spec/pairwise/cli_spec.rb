@@ -11,13 +11,27 @@ module Pairwise
       @output_stream ||= StringIO.new
     end
 
+    def options
+      #TODO: push options out to an object and avoid hacking at private instance vars
+      @cli.instance_variable_get("@options")
+    end
+
     def prepare_args(args)
       args.is_a?(Array) ? args : args.split(' ')
     end
 
     def after_parsing(args)
-      Pairwise::Cli.new(prepare_args(args), output_stream).parse!
+      @cli = Pairwise::Cli.new(prepare_args(args), output_stream)
+      @cli.parse!
       yield
+    end
+
+   context '--keep-wild-cards' do
+      it "displays wild cards in output result" do
+        after_parsing('--keep-wild-cards') do
+          options[:keep_wild_cards].should == true
+        end
+      end
     end
 
     context "--help" do

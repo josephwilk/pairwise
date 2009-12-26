@@ -4,6 +4,7 @@ module Pairwise
 
       def initialize(out)
         @out = out
+        @max = {}
       end
 
       def display(test_data, inputs)
@@ -31,8 +32,7 @@ module Pairwise
       end
 
       def max_line_length(column)
-        ([@inputs[column].length] +
-          @test_data.map{|data| data[column].length}).max
+        @max[column] ||= ([@inputs[column].length] + @test_data.map{|data| data[column].length}).max
       end
 
     end

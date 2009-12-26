@@ -11,6 +11,7 @@ module Pairwise
     def initialize(args, out = STDOUT)
       @args, @out = args, out
       @formatter = Formatter::Cucumber.new(@out)
+      @options = defaults
     end
 
     def parse!
@@ -20,7 +21,9 @@ module Pairwise
         "Example:",
             "pairwise data/inputs.yml", "", "",
           ].join("\n")
-
+        opts.on("-k", "--keep-wild-cards") do
+          @options[:keep_wild_cards] = true
+        end
         opts.on_tail("--version", "Show version.") do
           @out.puts Pairwise::VERSION
           Kernel.exit(0)
@@ -38,10 +41,16 @@ module Pairwise
       exit_with_help if @input_file.nil? || @input_file.empty?
       input_data, input_labels = *load_and_parse_input_file!
 
-      @formatter.display(Pairwise.combinations(*input_data), input_labels)
+      builder = Pairwise::Builder.new(input_data, @options)
+
+      @formatter.display(builder.build, input_labels)
     end
 
     private
+    def defaults
+      {:keep_wild_cards => false}
+    end
+
     def exit_with_help
       @out.puts @args.options.help
       Kernel.exit(0)

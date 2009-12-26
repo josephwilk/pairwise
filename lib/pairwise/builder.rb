@@ -3,10 +3,11 @@
 module Pairwise
   class Builder
 
-    WILD_CARD = :wild_card
+    WILD_CARD = 'wild_card'
 
-    def initialize(inputs)
+    def initialize(inputs, options = {})
       @inputs = inputs
+      @options = options
     end
 
     def build
@@ -22,7 +23,8 @@ module Pairwise
         input_lists, pi = horizontal_growth(input_lists, input_list, @inputs[0..(i-1)])
         input_lists = vertical_growth(input_lists, pi)
       end
-      replace_wild_cards(input_lists)
+      input_lists = replace_wild_cards(input_lists) unless @options[:keep_wild_cards]
+      input_lists
     end
 
     def horizontal_growth(input_lists, parameter_i, inputs)
