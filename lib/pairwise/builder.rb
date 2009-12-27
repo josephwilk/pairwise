@@ -23,6 +23,7 @@ module Pairwise
         input_lists, pi = horizontal_growth(input_lists, input_list, @inputs[0..(i-1)])
         input_lists = vertical_growth(input_lists, pi)
       end
+      input_lists = replace_redundant_wild_cards(input_lists)
       input_lists = replace_wild_cards(input_lists) unless @options[:keep_wild_cards]
       input_lists
     end
@@ -68,10 +69,30 @@ module Pairwise
       input_lists + new_input_lists
     end
 
+    def replace_redundant_wild_cards(input_lists)
+      replace_each_input_value(input_lists) do |input_value, index|
+        if input_value == WILD_CARD && @inputs[index].length == 1
+          @inputs[index][0]
+        else
+          input_value
+        end
+      end
+    end
+
     def replace_wild_cards(input_lists)
+      replace_each_input_value(input_lists) do |input_value, index|
+        if input_value == WILD_CARD
+          pick_random_value(@inputs[index])
+        else
+          input_value
+        end
+      end
+    end
+
+    def replace_each_input_value(input_lists)
       input_lists.map do |input_list|
         input_list.enum_for(:each_with_index).map do |input_value, index|
-          input_value == WILD_CARD ? pick_random_value(@inputs[index]) : input_value
+          yield input_value, index
         end
       end
     end

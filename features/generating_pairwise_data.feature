@@ -59,17 +59,22 @@ Scenario: Unorderd yaml inputs
 Scenario: Not replacing wild cards
   Given I have the yaml file "inputs.yml" containing:
   """
-  - A: [A1]
+  - A: [A1, A2, A3]
   - B: [B1, B2]
-  - C: [C1, C2]
+  - C: [C1, C2, C3]
   """
   When I run pairwise inputs.yml --keep-wild-cards
   Then I should see the output
   """
-  | A         | B  | C  |
-  | A1        | B1 | C1 |
-  | A1        | B2 | C2 |
-  | wild_card | B2 | C1 |
-  | wild_card | B1 | C2 |
+  | A  | B         | C  |
+  | A1 | B1        | C1 |
+  | A1 | B2        | C2 |
+  | A2 | B1        | C3 |
+  | A2 | B2        | C1 |
+  | A3 | B1        | C2 |
+  | A3 | B2        | C3 |
+  | A3 | wild_card | C1 |
+  | A2 | wild_card | C2 |
+  | A1 | wild_card | C3 |
 
   """
