@@ -32,22 +32,22 @@ module Pairwise
       pi = generate_pairs_between(parameter_i, inputs, inputs.size)
 
       if input_lists.size <= parameter_i.size
-        input_lists = input_lists.enum_for(:each_with_index).map do |test, j|
-          extended_test = test + [parameter_i[j]]
-          pi = remove_pairs_covered_by(extended_test, pi)
-          extended_test
+        input_lists = input_lists.enum_for(:each_with_index).map do |input_list, index_of_input_under_inspection|
+          extended_input_list = input_list + [parameter_i[index_of_input_under_inspection]]
+          pi = remove_pairs_covered_by(extended_input_list, pi)
+          extended_input_list
         end
       else
-        input_lists[0...parameter_i.size] = input_lists[0...parameter_i.size].enum_for(:each_with_index).map do |test, j|
-          extended_test = input_lists[j] + [parameter_i[j]]
-          pi = remove_pairs_covered_by(extended_test, pi)
-          extended_test
+        input_lists[0...parameter_i.size] = input_lists[0...parameter_i.size].enum_for(:each_with_index).map do |input_list, index_of_input_under_inspection|
+          extended_input_list = input_list + [parameter_i[index_of_input_under_inspection]]
+          pi = remove_pairs_covered_by(extended_input_list, pi)
+          extended_input_list
         end
 
-        input_lists[parameter_i.size..-1] = input_lists[parameter_i.size..-1].map do |test|
-          extended_test = value_that_covers_most_pairs(test, parameter_i, pi)
-          pi = remove_pairs_covered_by(extended_test, pi)
-          extended_test
+        input_lists[parameter_i.size..-1] = input_lists[parameter_i.size..-1].map do |input_list|
+          extended_input_list = input_list_that_covers_most_pairs(input_list, parameter_i, pi)
+          pi = remove_pairs_covered_by(extended_input_list, pi)
+          extended_input_list
         end
       end
 
@@ -70,7 +70,7 @@ module Pairwise
     end
 
     def replace_redundant_wild_cards(input_lists)
-      replace_each_input_value(input_lists) do |input_value, index|
+      map_each_input_value(input_lists) do |input_value, index|
         if input_value == WILD_CARD && @inputs[index].length == 1
           @inputs[index][0]
         else
@@ -80,7 +80,7 @@ module Pairwise
     end
 
     def replace_wild_cards(input_lists)
-      replace_each_input_value(input_lists) do |input_value, index|
+      map_each_input_value(input_lists) do |input_value, index|
         if input_value == WILD_CARD
           pick_random_value(@inputs[index])
         else
@@ -89,7 +89,7 @@ module Pairwise
       end
     end
 
-    def replace_each_input_value(input_lists)
+    def map_each_input_value(input_lists)
       input_lists.map do |input_list|
         input_list.enum_for(:each_with_index).map do |input_value, index|
           yield input_value, index
@@ -117,16 +117,16 @@ module Pairwise
       pi.reject{|pair| pair.covered_by?(extended_input_list)}
     end
 
-    def value_that_covers_most_pairs(input_list, parameter_i, pi)
+    def input_list_that_covers_most_pairs(input_list, parameter_i, pi)
       selected_input_list = nil
-      parameter_i.reduce(0) do |most_covered, value|
+      parameter_i.reduce(0) do |max_covered_count, value|
         input_list_candidate = input_list + [value]
-        covered = pairs_covered_count(input_list_candidate, pi)
-        if covered >= most_covered
+        covered_count = pairs_covered_count(input_list_candidate, pi)
+        if covered_count >= max_covered_count
           selected_input_list = input_list_candidate
-          covered
+          covered_count
         else
-          most_covered
+          max_covered_count
         end
       end
       selected_input_list
