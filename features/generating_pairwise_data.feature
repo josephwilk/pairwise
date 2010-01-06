@@ -66,15 +66,15 @@ Scenario: Not replacing wild cards
   When I run pairwise inputs.yml --keep-wild-cards
   Then I should see the output
   """
-  | A  | B         | C  |
-  | A1 | B1        | C1 |
-  | A1 | B2        | C2 |
-  | A2 | B1        | C3 |
-  | A2 | B2        | C1 |
-  | A3 | B1        | C2 |
-  | A3 | B2        | C3 |
-  | A3 | wild_card | C1 |
-  | A2 | wild_card | C2 |
-  | A1 | wild_card | C3 |
+  | A  | B              | C  |
+  | A1 | B1             | C1 |
+  | A1 | B2             | C2 |
+  | A2 | B1             | C3 |
+  | A2 | B2             | C1 |
+  | A3 | B1             | C2 |
+  | A3 | B2             | C3 |
+  | A3 | any_value_of_B | C1 |
+  | A2 | any_value_of_B | C2 |
+  | A1 | any_value_of_B | C3 |
 
   """
