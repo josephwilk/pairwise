@@ -30,9 +30,9 @@ module Pairwise
       input_list
     end
 
-    def replaceable_wild_card?(input_lists)
-      wild_card_list = input_lists.map do |input_list|
-        input_list[@p2_position] == Builder::WILD_CARD && input_list[@p1_position] == @p1
+    def replaceable_wild_card?(input_combinations)
+      wild_card_list = input_combinations.map do |input_combination|
+        input_combination[@p2_position] == Builder::WILD_CARD && input_combination[@p1_position] == @p1
       end
       wild_card_list.rindex(true)
     end
