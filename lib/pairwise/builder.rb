@@ -34,9 +34,11 @@ module Pairwise
       if input_combinations.size <= input_values_for_growth.size
         input_combinations, uncovered_pairs = grow_input_collections_and_remove_covered_pairs(input_combinations, input_values_for_growth, uncovered_pairs)
       else
-        input_combinations[0...input_values_for_growth.size], uncovered_pairs = grow_input_collections_and_remove_covered_pairs(input_combinations[0...input_values_for_growth.size], input_values_for_growth, uncovered_pairs)
+        range_to_grow = 0...input_values_for_growth.size
+        input_combinations[range_to_grow], uncovered_pairs = grow_input_collections_and_remove_covered_pairs(input_combinations[range_to_grow], input_values_for_growth, uncovered_pairs)
 
-        input_combinations[input_values_for_growth.size..-1] = input_combinations[input_values_for_growth.size..-1].map do |input_combination|
+        range_to_grow = input_values_for_growth.size..-1
+        input_combinations[range_to_grow] = input_combinations[range_to_grow].map do |input_combination|
           extended_input_combination = input_combination_that_covers_most_pairs(input_combination, input_values_for_growth, uncovered_pairs)
           uncovered_pairs = remove_pairs_covered_by(extended_input_combination, uncovered_pairs)
           extended_input_combination
