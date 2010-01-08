@@ -39,11 +39,15 @@ module Pairwise
     def execute!
       parse!
       exit_with_help if @input_file.nil? || @input_file.empty?
-      input_data, input_labels = *load_and_parse_input_file!
 
-      builder = Pairwise::Builder.new(input_data, @options)
+      inputs = YAML.load_file(@input_file)
+      if inputs
+        input_data, input_labels = *parse_input_data!(inputs)
 
-      @formatter.display(builder.build, input_labels)
+        builder = Pairwise::Builder.new(input_data, @options)
+
+        @formatter.display(builder.build, input_labels)
+      end
     end
 
     private
@@ -56,8 +60,7 @@ module Pairwise
       Kernel.exit(0)
     end
 
-    def load_and_parse_input_file!
-      inputs = YAML.load_file(@input_file)
+    def parse_input_data!(inputs)
       inputs = hash_inputs_to_list(inputs) if inputs.is_a?(Hash)
 
       raw_inputs = inputs.map {|input| input.values[0]}
