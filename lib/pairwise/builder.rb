@@ -85,7 +85,7 @@ module Pairwise
     def replace_wild_cards(input_combinations)
       map_each_input_value(input_combinations) do |input_value, index|
         if input_value == WILD_CARD
-          pick_random_value(@inputs[index])
+          pick_random_value(@list_of_input_values[index])
         else
           input_value
         end
@@ -101,7 +101,7 @@ module Pairwise
     end
 
     def pick_random_value(input_combination)
-      input_combination[rand(input_combination.size)]
+      input_combination[Kernel.rand(input_combination.size)]
     end
 
     def generate_pairs_between(parameter_i, input_lists, p_index)
