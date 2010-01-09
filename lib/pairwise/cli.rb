@@ -47,6 +47,8 @@ module Pairwise
         builder = Pairwise::Builder.new(input_data, @options)
 
         @formatter.display(builder.build, input_labels)
+      else
+        puts "Error: '#{@input_file}' does not contain the right yaml structure for me to generate the pairwise set!"
       end
     end
 
