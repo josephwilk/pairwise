@@ -41,7 +41,7 @@ module Pairwise
       exit_with_help if @input_file.nil? || @input_file.empty?
 
       inputs = YAML.load_file(@input_file)
-      if inputs
+      if valid_inputs?(inputs)
         input_data, input_labels = *parse_input_data!(inputs)
 
         builder = Pairwise::Builder.new(input_data, @options)
@@ -53,6 +53,10 @@ module Pairwise
     private
     def defaults
       {:keep_wild_cards => false}
+    end
+
+    def valid_inputs?(inputs)
+      inputs && (inputs.is_a?(Array) || inputs.is_a?(Hash))
     end
 
     def exit_with_help
