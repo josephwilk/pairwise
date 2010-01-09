@@ -8,9 +8,9 @@ module Pairwise
       end
 
       def display(test_data, input_labels)
-        @test_data = label_wild_cards(test_data, input_labels)    
+        @test_data = label_wild_cards(test_data, input_labels)
         @input_labels = input_labels
-                        
+
         @out.print "|"
         @input_labels.each_with_index do |label, column|
           @out.print padded_string(label, column) + "|"
@@ -34,14 +34,14 @@ module Pairwise
           end
         end
       end
-      
+
       def padded_string(string, column)
-        padding_length = max_line_length(column) - string.length
+        padding_length = max_line_length(column) - string.to_s.length
         " #{string} " + (" " * padding_length)
       end
 
       def max_line_length(column)
-        @max[column] ||= ([@input_labels[column].length] + @test_data.map{|data| data[column].length}).max
+        @max[column] ||= ([@input_labels[column].to_s.length] + @test_data.map{|data| data[column].to_s.length}).max
       end
 
     end

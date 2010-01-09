@@ -56,6 +56,19 @@ Scenario: Unorderd yaml inputs
 
     """
 
+Scenario: Single value yaml inputs
+  Given I have the yaml file "inputs.yml" containing:
+  """
+  1: 1
+  2: 2
+  """
+  When I run pairwise inputs.yml
+  Then I should see the output
+  """
+  | 1 | 2 |
+  | 1 | 2 |
+
+  """
 Scenario: Not replacing wild cards
   Given I have the yaml file "inputs.yml" containing:
   """

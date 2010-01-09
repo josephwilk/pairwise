@@ -74,7 +74,10 @@ module Pairwise
     end
 
     def hash_inputs_to_list(inputs_hash)
-      inputs_hash.map {|key, value| {key => value}}
+      inputs_hash.map do |key, value|
+        value = [value] unless value.is_a?(Array)
+        {key => value}
+      end
     end
 
     def input_names(inputs)
