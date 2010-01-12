@@ -1,6 +1,5 @@
 module Pairwise
   class PairCollection < Array
-    extend Forwardable
 
     def initialize(parameter_i, input_lists, p_index)
       pairs = generate_pairs_between(parameter_i, input_lists, p_index)
