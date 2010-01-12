@@ -26,7 +26,7 @@ module Pairwise
         # We are getting the uncovered pairs in reverse
         #pi.should == [[:A2, :C2],[:A1, :C3],[:B1, :C2],[:B2, :C3]]
         # Cheat and check we get the list in reverse
-        pi.should == [[:C2, :A2], [:C2, :B1], [:C3, :A1], [:C3, :B2]]
+        pi.to_a.should == [[:C2, :A2], [:C2, :B1], [:C3, :A1], [:C3, :B2]]
       end
     end
   end

@@ -2,6 +2,7 @@ $:.unshift(File.dirname(__FILE__)) unless
   $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
 
 require 'pairwise/test_pair'
+require 'pairwise/pair_collection'
 require 'pairwise/builder'
 require 'pairwise/formatter'
 require 'pairwise/cli'

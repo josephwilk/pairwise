@@ -11,8 +11,8 @@ module Pairwise
     end
 
     def build
-      input_combinations = generate_pairs_between(@list_of_input_values[0], [@list_of_input_values[1]], 0)
-      @list_of_input_values.size > 2 ? in_parameter_order_generation(input_combinations) : input_combinations.map{|list| list.to_a}
+      input_combinations = PairCollection.new(@list_of_input_values[0], [@list_of_input_values[1]], 0)
+      @list_of_input_values.size > 2 ? in_parameter_order_generation(input_combinations) : input_combinations.to_a
     end
 
     private
@@ -29,7 +29,7 @@ module Pairwise
     end
 
     def horizontal_growth(input_combinations, input_values_for_growth, previously_grown_input_values)
-      uncovered_pairs = generate_pairs_between(input_values_for_growth, previously_grown_input_values, previously_grown_input_values.size)
+      uncovered_pairs = PairCollection.new(input_values_for_growth, previously_grown_input_values, previously_grown_input_values.size)
 
       if input_combinations.size <= input_values_for_growth.size
         input_combinations, uncovered_pairs = grow_input_combinations_and_remove_covered_pairs(input_combinations, input_values_for_growth, uncovered_pairs)
@@ -39,8 +39,8 @@ module Pairwise
 
         range_to_grow = input_values_for_growth.size..-1
         input_combinations[range_to_grow] = input_combinations[range_to_grow].map do |input_combination|
-          extended_input_combination = input_combination_that_covers_most_pairs(input_combination, input_values_for_growth, uncovered_pairs)
-          uncovered_pairs = remove_pairs_covered_by(extended_input_combination, uncovered_pairs)
+          extended_input_combination = uncovered_pairs.input_combination_that_covers_most_pairs(input_combination, input_values_for_growth)
+          uncovered_pairs.remove_pairs_covered_by!(extended_input_combination)
           extended_input_combination
         end
       end
@@ -51,7 +51,7 @@ module Pairwise
     def grow_input_combinations_and_remove_covered_pairs(input_combinations, input_values_for_growth, uncovered_pairs)
       input_combinations = input_combinations.enum_for(:each_with_index).map do |input_combination, input_index|
         extended_input_combination = input_combination + [input_values_for_growth[input_index]]
-        uncovered_pairs = remove_pairs_covered_by(extended_input_combination, uncovered_pairs)
+        uncovered_pairs.remove_pairs_covered_by!(extended_input_combination)
         extended_input_combination
       end
       [input_combinations, uncovered_pairs]
@@ -104,42 +104,5 @@ module Pairwise
       input_combination[Kernel.rand(input_combination.size)]
     end
 
-    def generate_pairs_between(parameter_i, input_lists, p_index)
-      pairs = []
-      parameter_i.each do |p|
-        input_lists.each_with_index do |input_list, q_index|
-          input_list.each do |q|
-            pairs << TestPair.new(p_index, q_index, p, q)
-          end
-        end
-      end
-      pairs
-    end
-
-    def remove_pairs_covered_by(extended_input_list, pairs)
-      pairs.reject{|pair| pair.covered_by?(extended_input_list)}
-    end
-
-    def input_combination_that_covers_most_pairs(input_combination, input_values_for_growth, pairs)
-      selected_input_combination = nil
-      input_values_for_growth.reduce(0) do |max_covered_count, value|
-        input_combination_candidate = input_combination + [value]
-        covered_count = pairs_covered_count(input_combination_candidate, pairs)
-        if covered_count >= max_covered_count
-          selected_input_combination = input_combination_candidate
-          covered_count
-        else
-          max_covered_count
-        end
-      end
-      selected_input_combination
-    end
-
-    def pairs_covered_count(input_combination, pairs)
-      pairs.reduce(0) do |covered_count, pair|
-        covered_count += 1 if pair.covered_by?(input_combination)
-        covered_count
-      end
-    end
   end
 end
