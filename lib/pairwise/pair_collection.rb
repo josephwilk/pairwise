@@ -1,8 +1,8 @@
 module Pairwise
   class PairCollection < Array
 
-    def initialize(parameter_i, input_lists, p_index)
-      pairs = generate_pairs_between(parameter_i, input_lists, p_index)
+    def initialize(input_parameter_values, input_value_lists, input_parameter_index)
+      pairs = generate_pairs_between(input_parameter_values, input_value_lists, input_parameter_index)
       super(pairs)
     end
 
@@ -30,12 +30,12 @@ module Pairwise
     end
 
     private
-    def generate_pairs_between(parameter_i, input_lists, p_index)
+    def generate_pairs_between(input_parameter_values, input_value_lists, input_parameter_index)
       pairs = []
-      parameter_i.each do |p|
-        input_lists.each_with_index do |input_list, q_index|
-          input_list.each do |q|
-            pairs << TestPair.new(p_index, q_index, p, q)
+      input_parameter_values.each do |input_value_a|
+        input_value_lists.each_with_index do |input_list, input_value_b_index|
+          input_list.each do |input_value_b|
+            pairs << TestPair.new(input_parameter_index, input_value_b_index, input_value_a, input_value_b)
           end
         end
       end
