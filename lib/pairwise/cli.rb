@@ -31,10 +31,14 @@ module Pairwise
         "Example:",
             "pairwise data/inputs.yml", "", "",
           ].join("\n")
-        opts.on("-k", "--keep-wild-cards") do
+        opts.on("-k", "--keep-wild-cards",
+        "Don't automatically replace any wild-cards which appear",
+        "in the pairwise data") do
           @options[:keep_wild_cards] = true
         end
-        opts.on('-f FORMAT', '--format FORMAT', *FORMAT_HELP) do |format|
+        opts.on('-f FORMAT', '--format FORMAT',
+        "How to format pairwise data (Default: cucumber). Available formats:",
+        *FORMAT_HELP) do |format|
           @options[:format] = format
         end
         opts.on_tail("--version", "Show version.") do
