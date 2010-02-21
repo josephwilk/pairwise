@@ -21,7 +21,6 @@ module Pairwise
     end
 
     def after_parsing(args)
-      p prepare_args(args)
       @cli = Pairwise::Cli.new(prepare_args(args), output_stream)
       @cli.parse!
       yield
@@ -37,8 +36,14 @@ module Pairwise
 
     context '-f FORMAT or --format FORMAT' do
       it "defaults to the cucumber format for output" do
-        after_parsing('--format pretty') do
-          options[:format].should == 'pretty'
+        after_parsing('') do
+          options[:format].should == 'cucumber'
+        end
+      end
+
+      it "overides the cucumber format when passed a specific format" do
+        after_parsing('--format csv') do
+          options[:format].should == 'csv'
         end
       end
     end
