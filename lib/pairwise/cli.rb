@@ -4,9 +4,9 @@ module Pairwise
   class Cli
     BUILTIN_FORMATS = {
       'cucumber' => [Pairwise::Formatter::Cucumber,
-                     'Format pairwise data as tables for Cucumber'],
+                     'Tables for Cucumber'],
       'csv'      => [Pairwise::Formatter::Csv,
-                     'Format pairwise data as comma seperated values']}
+                     'Comma seperated values']}
 
     max = BUILTIN_FORMATS.keys.map{|s| s.length}.max
     FORMAT_HELP = (BUILTIN_FORMATS.keys.sort.map do |key|
