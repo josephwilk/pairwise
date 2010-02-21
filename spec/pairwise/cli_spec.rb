@@ -21,6 +21,7 @@ module Pairwise
     end
 
     def after_parsing(args)
+      p prepare_args(args)
       @cli = Pairwise::Cli.new(prepare_args(args), output_stream)
       @cli.parse!
       yield
@@ -30,6 +31,14 @@ module Pairwise
       it "displays wild cards in output result" do
         after_parsing('--keep-wild-cards') do
           options[:keep_wild_cards].should == true
+        end
+      end
+    end
+
+    context '-f FORMAT or --format FORMAT' do
+      it "defaults to the cucumber format for output" do
+        after_parsing('--format pretty') do
+          options[:format].should == 'pretty'
         end
       end
     end

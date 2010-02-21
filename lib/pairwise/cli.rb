@@ -2,6 +2,12 @@ require 'yaml'
 require 'optparse'
 module Pairwise
   class Cli
+    BUILTIN_FORMATS = {
+      'cucumber' => [Pairwise::Formatter::Cucumber,
+                     'Generates tables for cucumber.'],
+      'csv'      => [Pairwise::Formatter::Csv,
+                     'Generate pairs in comma seperated format']}
+
     class << self
       def execute(args)
         new(args).execute!
@@ -10,7 +16,6 @@ module Pairwise
 
     def initialize(args, out = STDOUT)
       @args, @out = args, out
-      @formatter = Formatter::Cucumber.new(@out)
       @options = defaults
     end
 
@@ -23,6 +28,9 @@ module Pairwise
           ].join("\n")
         opts.on("-k", "--keep-wild-cards") do
           @options[:keep_wild_cards] = true
+        end
+        opts.on('-f FORMAT', '--format FORMAT') do |format|
+          @options[:format] = format
         end
         opts.on_tail("--version", "Show version.") do
           @out.puts Pairwise::VERSION
@@ -46,7 +54,7 @@ module Pairwise
 
         builder = Pairwise::Builder.new(input_data, @options)
 
-        @formatter.display(builder.build, input_labels)
+        formatter.display(builder.build, input_labels)
       else
         puts "Error: '#{@input_file}' does not contain the right yaml structure for me to generate the pairwise set!"
       end
@@ -54,7 +62,8 @@ module Pairwise
 
     private
     def defaults
-      {:keep_wild_cards => false}
+      { :keep_wild_cards => false,
+        :format => 'cucumber' }
     end
 
     def valid_inputs?(inputs)
@@ -64,6 +73,11 @@ module Pairwise
     def exit_with_help
       @out.puts @args.options.help
       Kernel.exit(0)
+    end
+
+    def formatter
+      format = BUILTIN_FORMATS[@options[:format]][0]
+      format.new(@out)
     end
 
     def parse_input_data!(inputs)

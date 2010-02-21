@@ -1,1 +1,1 @@
-%q[cucumber].each {|file| require "pairwise/formatter/#{file}"}
+%w[cucumber csv].each {|file| require "pairwise/formatter/#{file}"}
