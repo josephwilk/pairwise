@@ -4,9 +4,14 @@ module Pairwise
   class Cli
     BUILTIN_FORMATS = {
       'cucumber' => [Pairwise::Formatter::Cucumber,
-                     'Generates tables for cucumber.'],
+                     'Generates pairs as tables for Cucumber'],
       'csv'      => [Pairwise::Formatter::Csv,
-                     'Generate pairs in comma seperated format']}
+                     'Generate pairs in a comma seperated format']}
+
+    max = BUILTIN_FORMATS.keys.map{|s| s.length}.max
+    FORMAT_HELP = (BUILTIN_FORMATS.keys.sort.map do |key|
+      "  #{key}#{' ' * (max - key.length)} : #{BUILTIN_FORMATS[key][1]}"
+    end)
 
     class << self
       def execute(args)
@@ -29,7 +34,7 @@ module Pairwise
         opts.on("-k", "--keep-wild-cards") do
           @options[:keep_wild_cards] = true
         end
-        opts.on('-f FORMAT', '--format FORMAT') do |format|
+        opts.on('-f FORMAT', '--format FORMAT', *FORMAT_HELP) do |format|
           @options[:format] = format
         end
         opts.on_tail("--version", "Show version.") do
