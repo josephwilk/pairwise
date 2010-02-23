@@ -51,7 +51,7 @@ module Pairwise
     context "--help" do
       it "displays usage" do
         after_parsing('--help') do
-          output_stream.string.should =~ /Usage: pairwise \[options\] FILE\.yml/
+          output_stream.string.should =~ /Usage: pairwise \[options\] FILE\.\[yml|csv\]/
         end
       end
     end

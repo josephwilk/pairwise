@@ -7,7 +7,7 @@ Scenario: No input file specified
   When I run pairwise
   Then I should see in the output
   """
-  Usage: pairwise [options] FILE.yml
+  Usage: pairwise [options] FILE.[yml|csv]
   """
 
 Scenario: Ordered yaml inputs
@@ -69,6 +69,31 @@ Scenario: Single value yaml inputs
   | 1 | 2 |
 
   """
+
+Scenario: inputing as csv
+  Given I have the csv file "inputs.csv" containing:
+    """
+    media,event with image,event without image
+    Image,Football,Football
+    Video,Basketball,Basketball
+    Music,Soccer,Soccer
+    """
+  When I run pairwise inputs.csv
+  Then I should see the output
+  """
+  | media | event without image | event with image |
+  | Image | Football            | Football         |
+  | Image | Basketball          | Basketball       |
+  | Image | Soccer              | Soccer           |
+  | Video | Football            | Soccer           |
+  | Video | Basketball          | Football         |
+  | Video | Soccer              | Basketball       |
+  | Music | Football            | Basketball       |
+  | Music | Basketball          | Soccer           |
+  | Music | Soccer              | Football         |
+
+  """
+
 Scenario: Not replacing wild cards
   Given I have the yaml file "inputs.yml" containing:
   """

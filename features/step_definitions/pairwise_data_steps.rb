@@ -1,4 +1,4 @@
-Given /^I have the yaml file "([^\"]*)" containing:$/ do |file_name, file_contents|
+Given /^I have the (?:yaml|csv) file "([^\"]*)" containing:$/ do |file_name, file_contents|
   create_file(file_name, file_contents)
 end
 
@@ -11,6 +11,7 @@ Then /^I should see the output$/ do |text|
 end
 
 Then /^I should see in the output$/ do |string|
+  Then "it should not show any errors"
   last_stdout.should include(string)
 end
 
