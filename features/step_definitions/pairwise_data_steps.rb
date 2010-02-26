@@ -15,6 +15,10 @@ Then /^I should see in the output$/ do |string|
   last_stdout.should include(string)
 end
 
+Then /^I should see in the errors$/ do |string|
+  last_stderr.should include(string)
+end
+
 Then /^it should not show any errors$/ do
   last_stderr.should == ""
 end
