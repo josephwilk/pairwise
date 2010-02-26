@@ -9,7 +9,7 @@ Scenario: Empty yml
   Then it should not show any errors
   And I should see in the output
   """
-  Error: 'inputs.yml' does not contain the right yaml structure for me to generate the pairwise set!
+  Error: 'inputs.yml' does not contain the right structure for me to generate the pairwise set!
   """
 
 Scenario: yml with no lists
@@ -21,5 +21,5 @@ Scenario: yml with no lists
   Then it should not show any errors
   And I should see in the output
   """
-  Error: 'listey_inputs.yml' does not contain the right yaml structure for me to generate the pairwise set!
+  Error: 'listey_inputs.yml' does not contain the right structure for me to generate the pairwise set!
   """
