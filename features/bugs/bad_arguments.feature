@@ -8,7 +8,8 @@ Scenario: Non existent file
   """
 
 Scenario: Existing folder
-  When I run pairwise ../bin/
+  Given the folder "empty"
+  When I run pairwise empty/
   And I should see in the output
   """
   Usage: pairwise

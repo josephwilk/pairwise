@@ -17,6 +17,8 @@ module Pairwise
       self.extend(input_file_module)
     end
 
+    private
+
     def input_file_module
       type = @filename[/\.(.+)$/, 1]
       case type.downcase

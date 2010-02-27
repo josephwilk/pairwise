@@ -34,7 +34,7 @@ class PairwiseWorld
   def last_stdout
     @last_stdout
   end
-  
+
   def create_file(file_name, file_content)
     in_current_dir do
       FileUtils.mkdir_p(File.dirname(file_name)) unless File.directory?(File.dirname(file_name))
@@ -42,9 +42,15 @@ class PairwiseWorld
     end
   end
 
+  def create_folder(folder_name)
+    in_current_dir do
+      FileUtils.mkdir_p(folder_name) unless File.directory?(folder_name)
+    end
+  end
+
   def set_env_var(variable, value)
     @original_env_vars ||= {}
-    @original_env_vars[variable] = ENV[variable] 
+    @original_env_vars[variable] = ENV[variable]
     ENV[variable]  = value
   end
 

@@ -2,6 +2,10 @@ Given /^I have the (?:yaml|csv) file "([^\"]*)" containing:$/ do |file_name, fil
   create_file(file_name, file_contents)
 end
 
+Given /^the folder "([^\"]*)"$/ do |folder_name|
+  create_folder(folder_name)
+end
+
 When /^I run (.+)$/ do |command|
   run(command)
 end
