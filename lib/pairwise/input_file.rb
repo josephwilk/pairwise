@@ -43,7 +43,7 @@ module Pairwise
       require 'csv'
 
       csv_data = CSV.read @filename
-      headers = csv_data.shift.map {|i| i.to_s.strip }
+      headers = csv_data.shift.map {|head| head.to_s.strip }
       string_data = csv_data.map {|row| row.map {|cell| cell.to_s.strip } }
 
       inputs = Hash.new {|h,k| h[k] = []}
