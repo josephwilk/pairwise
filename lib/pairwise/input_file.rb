@@ -21,6 +21,7 @@ module Pairwise
 
     def input_file_module
       type = @filename[/\.(.+)$/, 1]
+      raise "Cannot determine file type for: #{@filename}" unless type
       case type.downcase
       when 'yaml', 'yml' then Yaml
       else

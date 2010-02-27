@@ -22,3 +22,11 @@ Feature: Bad arguments
     """
     Unsupported file type: rar
     """
+
+  Scenario: Unsupported input file without extension
+    Given I have the file "example"
+    When I run pairwise example
+    Then I should see in the errors
+    """
+    Cannot determine file type for: example
+    """
