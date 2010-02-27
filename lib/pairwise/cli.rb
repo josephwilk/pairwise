@@ -55,9 +55,7 @@ module Pairwise
 
     def execute!
       parse!
-      exit_with_help if @filename_with_path.nil? || @filename_with_path.empty?
-      raise Errno::ENOENT, @filename_with_path  unless File.exist?(@filename_with_path)
-      exit_with_help unless File.file?(@filename_with_path)
+      validate_options!
 
       if inputs = InputFile.load(@filename_with_path)
         builder = Pairwise::Builder.new(inputs.data, @options)
@@ -72,6 +70,12 @@ module Pairwise
     def defaults
       { :keep_wild_cards => false,
         :format => 'cucumber' }
+    end
+
+    def validate_options!
+      exit_with_help if @filename_with_path.nil? || @filename_with_path.empty?
+      raise Errno::ENOENT, @filename_with_path  unless File.exist?(@filename_with_path)
+      exit_with_help unless File.file?(@filename_with_path)
     end
 
     def exit_with_help

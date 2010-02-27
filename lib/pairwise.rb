@@ -5,6 +5,7 @@ require 'pairwise/test_pair'
 require 'pairwise/pair_collection'
 require 'pairwise/builder'
 require 'pairwise/formatter'
+require 'pairwise/input_data'
 require 'pairwise/input_file'
 require 'pairwise/cli'
 
