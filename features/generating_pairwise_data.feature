@@ -73,10 +73,10 @@ Scenario: Single value yaml inputs
 Scenario: inputing as csv
   Given I have the csv file "inputs.csv" containing:
     """
-    media,event with image,event without image
-    Image,Football,Football
-    Video,Basketball,Basketball
-    Music,Soccer,Soccer
+    media, event with image, event without image
+    Image, Football, Football
+    Video, Basketball, Basketball
+    Music, Soccer, Soccer
     """
   When I run pairwise inputs.csv
   Then I should see the output
