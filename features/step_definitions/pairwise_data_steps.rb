@@ -1,8 +1,12 @@
-Given /^I have the (?:yaml|csv) file "([^\"]*)" containing:$/ do |file_name, file_contents|
+Given /^I have the (?:yaml |csv )?file "([^\"]*)" containing:$/ do |file_name, file_contents|
   create_file(file_name, file_contents)
 end
 
-Given /^the folder "([^\"]*)"$/ do |folder_name|
+Given /^I have the file "([^\"]*)"$/ do |filename|
+  Given %Q{I have the file "#{filename}" containing:}, ""
+end
+
+Given /^I have a folder "([^\"]*)"$/ do |folder_name|
   create_folder(folder_name)
 end
 

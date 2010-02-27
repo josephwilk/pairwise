@@ -8,9 +8,17 @@ Scenario: Non existent file
   """
 
 Scenario: Existing folder
-  Given the folder "empty"
+  Given I have a folder "empty"
   When I run pairwise empty/
-  And I should see in the output
+  Then I should see in the output
   """
   Usage: pairwise
+  """
+
+Scenario: Unsupported input file type
+  Given I have the file "example.rar"
+  When I run pairwise example.rar
+  Then I should see in the errors
+  """
+  Unsupported file type: rar
   """
