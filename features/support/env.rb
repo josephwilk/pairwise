@@ -7,6 +7,8 @@ require 'forwardable'
 
 SCRATCH_SPACE = 'tmp'
 
+require 'limited_red/plugin'
+
 class PairwiseWorld
   extend Forwardable
   def_delegators PairwiseWorld, :self_test_dir
