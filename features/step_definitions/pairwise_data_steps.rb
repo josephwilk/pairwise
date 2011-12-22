@@ -3,7 +3,7 @@ Given /^I have the (?:yaml |csv )?file "([^\"]*)" containing:$/ do |file_name, f
 end
 
 Given /^I have the file "([^\"]*)"$/ do |filename|
-  Given %Q{I have the file "#{filename}" containing:}, ""
+  step %Q{I have the file "#{filename}" containing:}, ""
 end
 
 Given /^I have a folder "([^\"]*)"$/ do |folder_name|
