@@ -19,7 +19,7 @@ Then /^I should see the output$/ do |text|
 end
 
 Then /^I should see in the output$/ do |string|
-  Then "it should not show any errors"
+  step "it should not show any errors"
   last_stdout.should include(string)
 end
 

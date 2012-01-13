@@ -1,13 +1,14 @@
 require 'rubygems'
 require 'tempfile'
-require 'spec/expectations'
-require "spec/mocks"
+require 'rspec'
+require "rspec/mocks/standalone"
+
 require 'fileutils'
 require 'forwardable'
 
 SCRATCH_SPACE = 'tmp'
 
-require 'limited_red/plugin'
+require 'limited_red/plugins/cucumber'
 
 class PairwiseWorld
   extend Forwardable
