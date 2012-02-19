@@ -7,7 +7,7 @@ require 'forwardable'
 
 SCRATCH_SPACE = 'tmp'
 
-require 'limited_red/plugin'
+require 'limited_red/plugins/cucumber'
 
 class PairwiseWorld
   extend Forwardable
