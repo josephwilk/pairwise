@@ -1,4 +1,7 @@
 require 'rubygems'
+require 'simplecov'
+SimpleCov.start
+
 require 'tempfile'
 require 'rspec'
 require "rspec/mocks/standalone"

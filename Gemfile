@@ -5,4 +5,5 @@ group :development,:test do
   gem 'cucumber'
   gem 'limited_red'
   gem 'rake'
+  gem 'simplecov', :require => false
 end
