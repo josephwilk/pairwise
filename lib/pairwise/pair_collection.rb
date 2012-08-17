@@ -11,18 +11,8 @@ module Pairwise
     end
 
     def input_combination_that_covers_most_pairs(input_combination, input_values_for_growth)
-      selected_input_combination = nil
-      input_values_for_growth.reduce(0) do |max_covered_count, value|
-        input_combination_candidate = input_combination + [value]
-        covered_count = pairs_covered_count(input_combination_candidate)
-        if covered_count >= max_covered_count
-          selected_input_combination = input_combination_candidate
-          covered_count
-        else
-          max_covered_count
-        end
-      end
-      selected_input_combination
+      candidates =  input_values_for_growth.map{|value| input_combination + [value] }
+      candidates.max {|combination_1, combination_2| pairs_covered_count(combination_1) <=> pairs_covered_count(combination_2)}
     end
 
     def to_a
@@ -30,6 +20,7 @@ module Pairwise
     end
 
     private
+    
     def generate_pairs_between(input_parameter_values, input_value_lists, input_parameter_index)
       pairs = []
       input_parameter_values.each do |input_value_a|

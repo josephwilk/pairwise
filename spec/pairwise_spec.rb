@@ -96,15 +96,11 @@ describe Pairwise do
       it "should generate all pairs for 4 parameters of 2,1,2,2 values" do
         data = [[:A1, :A2], [:B1], [:C1, :C2], [:D1, :D2]]
 
-        Pairwise.combinations(*data).should == [[:A1, :B1, :C1, :D1],
-                                           [:A2, :B1, :C2, :D2],
-                                           [:A2, :B1, :C1, :D2],
-                                           [:A1, :B1, :C2, :D2],
-                                           [:A2, :B1, :C2, :D1]]
-        #:A1, :B1, :C1, :D1
-        #:A1, :B1, :C2, :D2
-        #:A2, any_value_of_B, :C2, :D1
-        #:A2, :B1, :C1, :D2
+        Pairwise.combinations(*data).should == [[:A1, :B1, :C1, :D1], 
+                                                [:A2, :B1, :C2, :D2], 
+                                                [:A2, :B1, :C1, :D1], 
+                                                [:A1, :B1, :C2, :D1], 
+                                                [:A1, :B1, :C1, :D2]]
       end
 
       it "should generate pairs for three parameters" do

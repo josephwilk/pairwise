@@ -13,15 +13,16 @@ Feature: Customizing pairwise output format
     When I run pairwise inputs.yml --format csv
     Then I should see the output
       """
-      event with image,event without image,media
-      Football,Football,Image
-      Football,Basketball,Video
-      Football,Soccer,Music
-      Basketball,Football,Music
-      Basketball,Basketball,Image
-      Basketball,Soccer,Video
-      Soccer,Football,Video
-      Soccer,Basketball,Music
-      Soccer,Soccer,Image
+	  event with image,event without image,media
+	  Football,Football,Image
+	  Football,Basketball,Video
+	  Football,Soccer,Music
+	  Basketball,Football,Video
+	  Basketball,Basketball,Image
+	  Basketball,Soccer,Image
+	  Soccer,Football,Music
+	  Soccer,Basketball,Image
+	  Soccer,Soccer,Video
+	  Basketball,Basketball,Music
 
       """
