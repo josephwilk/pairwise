@@ -34,8 +34,11 @@ module Pairwise
   module Yaml
     def load_and_parse
       require 'yaml'
-
-      inputs = YAML.load_file(@filename)
+      begin
+        inputs = YAML.load_file(@filename)
+      rescue
+        nil
+      end
     end
   end
 
