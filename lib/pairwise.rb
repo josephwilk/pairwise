@@ -10,7 +10,9 @@ require 'pairwise/input_file'
 require 'pairwise/cli'
 
 require 'yaml'
-YAML::ENGINE.yamler = 'syck'
+if RUBY_VERSION != '1.8.7'
+  YAML::ENGINE.yamler = 'syck' 
+end
 
 module Pairwise
   class InvalidInputData < Exception; end
