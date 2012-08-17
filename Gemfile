@@ -6,4 +6,6 @@ group :development,:test do
   gem 'limited_red'
   gem 'rake'
   gem 'simplecov', :require => false
+  gem 'guard'
+  gem 'guard-rspec'
 end
