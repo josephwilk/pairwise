@@ -43,16 +43,16 @@ Feature: Generating pairwise data
     When I run pairwise inputs.yml
     Then I should see the output
       """
-      | media | event without image | event with image |
-      | Image | Football            | Football         |
-      | Image | Basketball          | Basketball       |
-      | Image | Soccer              | Soccer           |
-      | Video | Football            | Soccer           |
-      | Video | Basketball          | Football         |
-      | Video | Soccer              | Basketball       |
-      | Music | Football            | Basketball       |
-      | Music | Basketball          | Soccer           |
-      | Music | Soccer              | Football         |
+      | event with image | event without image | media |
+      | Football         | Football            | Image |
+      | Football         | Basketball          | Video |
+      | Football         | Soccer              | Music |
+      | Basketball       | Football            | Music |
+      | Basketball       | Basketball          | Image |
+      | Basketball       | Soccer              | Video |
+      | Soccer           | Football            | Video |
+      | Soccer           | Basketball          | Music |
+      | Soccer           | Soccer              | Image |
 
       """
 
@@ -81,16 +81,16 @@ Feature: Generating pairwise data
     When I run pairwise inputs.csv
     Then I should see the output
     """
-    | media | event without image | event with image |
-    | Image | Football            | Football         |
-    | Image | Basketball          | Basketball       |
-    | Image | Soccer              | Soccer           |
-    | Video | Football            | Soccer           |
-    | Video | Basketball          | Football         |
-    | Video | Soccer              | Basketball       |
-    | Music | Football            | Basketball       |
-    | Music | Basketball          | Soccer           |
-    | Music | Soccer              | Football         |
+    | event with image | event without image | media |
+    | Football         | Football            | Image |
+    | Football         | Basketball          | Video |
+    | Football         | Soccer              | Music |
+    | Basketball       | Football            | Music |
+    | Basketball       | Basketball          | Image |
+    | Basketball       | Soccer              | Video |
+    | Soccer           | Football            | Video |
+    | Soccer           | Basketball          | Music |
+    | Soccer           | Soccer              | Image |
 
     """
 

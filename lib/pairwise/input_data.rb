@@ -16,7 +16,7 @@ module Pairwise
     private
 
     def hash_inputs_to_list(inputs_hash)
-      inputs_hash.map do |key, value|
+      inputs_hash.sort.map do |key, value|
         value = [value] unless value.is_a?(Array)
         {key => value}
       end
