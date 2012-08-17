@@ -10,6 +10,7 @@ require 'pairwise/input_file'
 require 'pairwise/cli'
 
 require 'yaml'
+YAML::ENGINE.yamler = 'syck'
 
 module Pairwise
   class InvalidInputData < Exception; end
