@@ -11,7 +11,7 @@ module Pairwise
     end
 
     def input_combination_that_covers_most_pairs(input_combination, input_values_for_growth)
-      candidates =  input_values_for_growth.map{|value| input_combination + [value] }
+      candidates = input_values_for_growth.map{|value| input_combination + [value]}
       candidates.max {|combination_1, combination_2| pairs_covered_count(combination_1) <=> pairs_covered_count(combination_2)}
     end
 
