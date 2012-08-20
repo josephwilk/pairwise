@@ -18,52 +18,17 @@ module Pairwise
     private
 
     def in_parameter_order_generation(input_combinations)
-      @list_of_input_values[2..-1].each_with_index do |input_values, i|
-        i += 2
-        input_combinations, uncovered_pairs = horizontal_growth(input_combinations, input_values, @list_of_input_values[0..(i-1)])
-        input_combinations = vertical_growth(input_combinations, uncovered_pairs)
+      @list_of_input_values[2..-1].each_with_index do |input_values, index|
+        index += 2
+        previously_grown_input_values = @list_of_input_values[0..(index-1)]
+        
+        input_combinations, uncovered_pairs = IPO::Horizontal.growth(input_combinations, input_values, previously_grown_input_values)
+        input_combinations = IPO::Vertical.growth(input_combinations, uncovered_pairs)
       end
       input_combinations = replace_wild_cards(input_combinations) unless @options[:keep_wild_cards]
       input_combinations
     end
-
-    def horizontal_growth(input_combinations, input_values_for_growth, previously_grown_input_values)
-      uncovered_pairs = PairCollection.new(input_values_for_growth, previously_grown_input_values, previously_grown_input_values.size)
-
-      if input_combinations.size <= input_values_for_growth.size
-        input_combinations, uncovered_pairs = grow_input_combinations_and_remove_covered_pairs(input_combinations, input_values_for_growth, uncovered_pairs)
-      else
-        range_to_grow = 0...input_values_for_growth.size
-        input_combinations[range_to_grow], uncovered_pairs = grow_input_combinations_and_remove_covered_pairs(input_combinations[range_to_grow], input_values_for_growth, uncovered_pairs)
-
-        range_to_grow = input_values_for_growth.size..-1
-        input_combinations[range_to_grow] = input_combinations[range_to_grow].map do |input_combination|
-          extended_input_combination = uncovered_pairs.input_combination_that_covers_most_pairs(input_combination, input_values_for_growth)
-          uncovered_pairs.remove_pairs_covered_by!(extended_input_combination)
-          extended_input_combination
-        end
-      end
-
-      [input_combinations, uncovered_pairs]
-    end
-
-    def grow_input_combinations_and_remove_covered_pairs(input_combinations, input_values_for_growth, uncovered_pairs)
-      input_combinations = input_combinations.enum_for(:each_with_index).map do |input_combination, input_index|
-        extended_input_combination = input_combination + [input_values_for_growth[input_index]]
-        uncovered_pairs.remove_pairs_covered_by!(extended_input_combination)
-        extended_input_combination
-      end
-      [input_combinations, uncovered_pairs]
-    end
-        
-    def vertical_growth(input_combinations, uncovered_pairs)
-      new_input_combinations = uncovered_pairs.reduce([]) do |new_input_combinations, uncovered_pair|
-        new_input_combinations = uncovered_pair.replace_wild_card(new_input_combinations)
-      end
-
-      input_combinations + new_input_combinations
-    end
-
+    
     def replace_wild_cards(input_combinations)
       map_each_input_value(input_combinations) do |input_value, index|
         if input_value == WILD_CARD

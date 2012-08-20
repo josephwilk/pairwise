@@ -4,6 +4,8 @@ $:.unshift(File.dirname(__FILE__)) unless
 require 'pairwise/test_pair'
 require 'pairwise/pair_collection'
 require 'pairwise/builder'
+require 'pairwise/ipo/horizontal'
+require 'pairwise/ipo/vertical'
 require 'pairwise/formatter'
 require 'pairwise/input_data'
 require 'pairwise/input_file'
