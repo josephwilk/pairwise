@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'simplecov'
 SimpleCov.start
+SimpleCov.command_name 'integration_tests'
 
 require 'tempfile'
 require 'rspec'
