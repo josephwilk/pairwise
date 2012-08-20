@@ -7,7 +7,7 @@ module IPO
     describe ".growth" do
       before(:each) do
         @test_pairs = [[:A1, :B1], [:A1, :B2], [:A2, :B1], [:A2, :B2]]
-        @data = [[:A1, :A2],[:B1, :B2],[:C1 , :C2 , :C3 ]]
+        @data       = [[:A1, :A2], [:B1, :B2], [:C1, :C2, :C3 ]]
       end
 
       it "should return pairs extended with C's inputs" do
