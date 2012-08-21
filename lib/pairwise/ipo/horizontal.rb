@@ -26,10 +26,10 @@ module Pairwise
         def grow_input_combinations_and_remove_covered_pairs(input_combinations, range_to_grow, input_values_for_growth, uncovered_pairs)
           input_combinations = input_combinations[range_to_grow].enum_for(:each_with_index).map do |input_combination, input_index|
 
-            extended_input_combination = if range_to_grow.first != 0
-              uncovered_pairs.input_combination_that_covers_most_pairs(input_combination, input_values_for_growth)
-            else
+            extended_input_combination = if range_to_grow.first == 0
               input_combination + [input_values_for_growth[input_index]]
+            else
+              uncovered_pairs.input_combination_that_covers_most_pairs(input_combination, input_values_for_growth)
             end
 
             uncovered_pairs.remove_pairs_covered_by!(extended_input_combination)
