@@ -17,8 +17,7 @@ module Pairwise
       possible_max_combinations = candidates.select{|combination| pairs_covered_count(max_combination) == pairs_covered_count(combination)}
 
       winner = if possible_max_combinations.size > 1 && !@combination_history.empty?
-        #Looking back across the picked values find the combination with the greatest difference
-        max_difference(possible_max_combinations, @combination_history)
+        find_most_different_combination(possible_max_combinations)
       else
         possible_max_combinations[0]
       end
@@ -51,23 +50,20 @@ module Pairwise
       end
     end
     
-    def max_difference(options, previous_choices)
+    def find_most_different_combination(options)
       scores = options.map do |option|
-        score(option, previous_choices)
+        score(option)
       end.flatten
 
       _, winner_index = *scores.each_with_index.max
       options[winner_index]
     end
     
-    def score(option, previous_choices)
+    def score(option)
       #O(n^2)
-      previous_choices.map do |choice|
-        i = 0
-        option.each_with_index.reduce(0) do |sum, value| 
-          value != choice[i] ? sum : sum = sum+=1
-          i+=1
-          sum
+      @combination_history.map do |previous_combination|
+        option.each_with_index.inject(0) do |difference_score, (value, index)|
+          value != previous_combination[index] ? difference_score : difference_score += 1
         end
       end.max
     end
