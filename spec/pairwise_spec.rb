@@ -108,12 +108,12 @@ describe Pairwise do
                 [:B1, :B2],
                 [:C1 , :C2 , :C3 ]]
 
-        Pairwise.combinations(*data).should == [[:A1, :B1, :C1],
-                                           [:A1, :B2, :C2],
-                                           [:A2, :B1, :C3],
-                                           [:A2, :B2, :C1],
-                                           [:A2, :B1, :C2],
-                                           [:A1, :B2, :C3]]
+        Pairwise.combinations(*data).should == [[:A1, :B1, :C1], 
+                                                [:A1, :B2, :C2], 
+                                                [:A2, :B1, :C2], 
+                                                [:A2, :B2, :C1], 
+                                                [:A1, :B2, :C3], 
+                                                [:A2, :B1, :C3]]
       end
 
       describe "replacing wildcards which could have more than one option" do
