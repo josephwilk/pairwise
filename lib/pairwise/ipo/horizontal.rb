@@ -7,7 +7,6 @@ module Pairwise
         def growth(input_combinations, input_values_for_growth, previously_grown_input_values)
           uncovered_pairs = PairCollection.new(input_values_for_growth, previously_grown_input_values, previously_grown_input_values.size)
           input_combinations, uncovered_pairs = grow_input_combinations_and_remove_covered_pairs(input_combinations, input_values_for_growth, uncovered_pairs)
-
           [input_combinations, uncovered_pairs]
         end
 

@@ -20,17 +20,16 @@ Feature: Generating pairwise data
     When I run pairwise inputs.yml
     Then I should see the output
       """
-	  | event with image | event without image | media |
-	  | Football         | Football            | Image |
-	  | Football         | Basketball          | Video |
-	  | Football         | Soccer              | Music |
-	  | Basketball       | Football            | Video |
-	  | Basketball       | Basketball          | Image |
-	  | Basketball       | Soccer              | Image |
-	  | Soccer           | Football            | Music |
-	  | Soccer           | Basketball          | Image |
-	  | Soccer           | Soccer              | Video |
-	  | Basketball       | Basketball          | Music |
+      | event with image | event without image | media |
+      | Football         | Football            | Image |
+      | Football         | Basketball          | Music |
+      | Football         | Soccer              | Video |
+      | Basketball       | Football            | Music |
+      | Basketball       | Basketball          | Video |
+      | Basketball       | Soccer              | Image |
+      | Soccer           | Football            | Video |
+      | Soccer           | Basketball          | Image |
+      | Soccer           | Soccer              | Music |
 
       """
 
@@ -44,17 +43,16 @@ Feature: Generating pairwise data
     When I run pairwise inputs.yml
     Then I should see the output
       """
-	  | event with image | event without image | media |
-	  | Football         | Football            | Image |
-	  | Football         | Basketball          | Video |
-	  | Football         | Soccer              | Music |
-	  | Basketball       | Football            | Video |
-	  | Basketball       | Basketball          | Image |
-	  | Basketball       | Soccer              | Image |
-	  | Soccer           | Football            | Music |
-	  | Soccer           | Basketball          | Image |
-	  | Soccer           | Soccer              | Video |
-	  | Basketball       | Basketball          | Music |
+      | event with image | event without image | media |
+      | Football         | Football            | Image |
+      | Football         | Basketball          | Music |
+      | Football         | Soccer              | Video |
+      | Basketball       | Football            | Music |
+      | Basketball       | Basketball          | Video |
+      | Basketball       | Soccer              | Image |
+      | Soccer           | Football            | Video |
+      | Soccer           | Basketball          | Image |
+      | Soccer           | Soccer              | Music |
 
       """
 
@@ -83,17 +81,16 @@ Feature: Generating pairwise data
     When I run pairwise inputs.csv
     Then I should see the output
     """
-	| event with image | event without image | media |
-	| Football         | Football            | Image |
-	| Football         | Basketball          | Video |
-	| Football         | Soccer              | Music |
-	| Basketball       | Football            | Video |
-	| Basketball       | Basketball          | Image |
-	| Basketball       | Soccer              | Image |
-	| Soccer           | Football            | Music |
-	| Soccer           | Basketball          | Image |
-	| Soccer           | Soccer              | Video |
-	| Basketball       | Basketball          | Music |
+    | event with image | event without image | media |
+    | Football         | Football            | Image |
+    | Football         | Basketball          | Music |
+    | Football         | Soccer              | Video |
+    | Basketball       | Football            | Music |
+    | Basketball       | Basketball          | Video |
+    | Basketball       | Soccer              | Image |
+    | Soccer           | Football            | Video |
+    | Soccer           | Basketball          | Image |
+    | Soccer           | Soccer              | Music |
 
     """
 
@@ -109,13 +106,13 @@ Feature: Generating pairwise data
     """
     | A  | B              | C  |
     | A1 | B1             | C1 |
-    | A1 | B2             | C2 |
+    | A1 | B2             | C3 |
     | A2 | B1             | C3 |
-    | A2 | B2             | C1 |
+    | A2 | B2             | C2 |
     | A3 | B1             | C2 |
-    | A3 | B2             | C3 |
-    | A3 | any_value_of_B | C1 |
-    | A2 | any_value_of_B | C2 |
-    | A1 | any_value_of_B | C3 |
+    | A3 | B2             | C1 |
+    | A2 | any_value_of_B | C1 |
+    | A1 | any_value_of_B | C2 |
+    | A3 | any_value_of_B | C3 |
 
     """

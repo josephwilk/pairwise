@@ -13,6 +13,7 @@ module Pairwise
     end
 
     def covered_by?(test_pair)
+      debugger unless test_pair 
       test_pair[@p1_position] == @p1 &&
       test_pair[@p2_position] == @p2
     end
