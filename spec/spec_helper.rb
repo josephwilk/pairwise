@@ -1,7 +1,7 @@
 require 'rubygems'
-require 'rspec'
+require 'bundler'
+Bundler.require(:test)
 
-require 'simplecov'
 SimpleCov.start
 SimpleCov.command_name 'unit_tests'
 
