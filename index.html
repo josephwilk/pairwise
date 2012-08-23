@@ -46,15 +46,14 @@
 
 <h2>Using Pairwise with Rspec</h2>
 
-<pre><code>
-describe “something” do
-  Pairwise.combinations([1,2], [1,2], [2,3]).each do |(event_id, new_event_id, media_id)|
-    it “should do something with these input values” do
-      ...
-    end
-  end
-end
-</code></pre>
+<div class="highlight"><pre><span class="n">describe</span> <span class="s2">"something"</span> <span class="k">do</span>
+  <span class="no">Pairwise</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="o">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="p">(</span><span class="n">event_id</span><span class="p">,</span> <span class="n">new_event_id</span><span class="p">,</span> <span class="n">media_id</span><span class="p">)</span><span class="o">|</span>
+    <span class="n">it</span> <span class="s2">"should do something with these input values"</span> <span class="k">do</span>
+      <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
 
 <h2>Using Pairwise with Cucumber</h2>
 
