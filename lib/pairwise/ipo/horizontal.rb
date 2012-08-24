@@ -1,5 +1,5 @@
 module Pairwise
-  module IPO
+  class IPO
 
     class Horizontal
       class << self

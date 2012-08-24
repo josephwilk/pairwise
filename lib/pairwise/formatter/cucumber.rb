@@ -30,7 +30,7 @@ module Pairwise
       def label_wild_cards(test_data, labels)
         test_data.map do |data|
           data.enum_for(:each_with_index).map do |datum, column|
-            datum == Builder::WILD_CARD ? "any_value_of_#{labels[column]}" : datum
+            datum == IPO::WILD_CARD ? "any_value_of_#{labels[column]}" : datum
           end
         end
       end

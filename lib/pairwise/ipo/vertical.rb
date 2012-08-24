@@ -1,5 +1,5 @@
 module Pairwise
-  module IPO
+  class IPO
     class Vertical
 
       def self.growth(input_combinations, uncovered_pairs)

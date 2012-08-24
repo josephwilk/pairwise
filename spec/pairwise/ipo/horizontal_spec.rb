@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Pairwise
-module IPO
+class IPO
   
   describe Horizontal do
     describe ".growth" do

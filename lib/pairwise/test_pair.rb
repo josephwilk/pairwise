@@ -30,7 +30,7 @@ module Pairwise
 
     private
     def create_input_list
-      new_input_list = Array.new(@p1_position){Builder::WILD_CARD}
+      new_input_list = Array.new(@p1_position){IPO::WILD_CARD}
 
       new_input_list[@p1_position] = @p1
       new_input_list[@p2_position] = @p2
@@ -39,7 +39,7 @@ module Pairwise
 
     def find_wild_card_index(input_combinations)
       wild_card_list = input_combinations.map do |input_combination|
-        input_combination[@p2_position] == Builder::WILD_CARD && input_combination[@p1_position] == @p1
+        input_combination[@p2_position] == IPO::WILD_CARD && input_combination[@p1_position] == @p1
       end
       wild_card_list.rindex(true)
     end

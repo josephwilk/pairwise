@@ -3,7 +3,7 @@ $:.unshift(File.dirname(__FILE__)) unless
 
 require 'pairwise/test_pair'
 require 'pairwise/pair_collection'
-require 'pairwise/builder'
+require 'pairwise/ipo'
 require 'pairwise/ipo/horizontal'
 require 'pairwise/ipo/vertical'
 require 'pairwise/formatter'
@@ -25,7 +25,7 @@ module Pairwise
   class << self
     def combinations(*inputs)
       raise InvalidInputData, "Minimum of 2 inputs are required to generate pairwise test set" unless valid?(inputs)
-      Pairwise::Builder.new(inputs).build
+      Pairwise::IPO.new(inputs).build
     end
 
     private

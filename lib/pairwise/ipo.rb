@@ -1,7 +1,7 @@
 # A pairwise implementation using the in-parameter-order (IPO) strategy.
 # Based on: http://ranger.uta.edu/~ylei/paper/ipo-tse.pdf
 module Pairwise
-  class Builder
+  class IPO
 
     WILD_CARD = 'wild_card'
 

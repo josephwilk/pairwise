@@ -58,7 +58,7 @@ module Pairwise
       validate_options!
 
       if inputs = InputFile.load(@filename_with_path)
-        builder = Pairwise::Builder.new(inputs.data, @options)
+        builder = Pairwise::IPO.new(inputs.data, @options)
 
         formatter.display(builder.build, inputs.labels)
       else
