@@ -30,20 +30,24 @@ module Pairwise
     end
     
     def replace_wild_cards(input_combinations)
-      map_each_input_value(input_combinations) do |input_value, index|
-        if input_value == WILD_CARD
-          if @list_of_input_values[index].length == 1
-            @list_of_input_values[index][0]
-          else
-            pick_random_value(@list_of_input_values[index])
-          end
+      map_wild_cards(input_combinations) do |_, index|
+        if @list_of_input_values[index].length == 1
+          @list_of_input_values[index][0]
         else
-          input_value
+          pick_random_value(@list_of_input_values[index])
+        end
+      end
+    end
+    
+    def map_wild_cards(input_combinations)
+      input_combinations.map do |input_combination|
+        input_combination.enum_for(:each_with_index).map do |input_value, index|
+          input_value == WILD_CARD ? yield(index, index) : input_value
         end
       end
     end
 
-    def map_each_input_value(input_combinations)
+    def map_each_input_value(input_combinations, &block)
       input_combinations.map do |input_combination|
         input_combination.enum_for(:each_with_index).map do |input_value, index|
           yield input_value, index
