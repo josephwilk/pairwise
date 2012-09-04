@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
     s.require_paths = %w[lib]
     s.files = %w[README.md] + Dir.glob("{examples,lib,spec}/**/*.rb")
     s.version = Pairwise::VERSION
+    s.executables  = ['pairwise']
 
     s.add_development_dependency 'rspec'
     s.add_development_dependency 'cucumber'
