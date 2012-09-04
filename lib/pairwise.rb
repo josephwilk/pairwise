@@ -19,8 +19,7 @@ end
 module Pairwise
   class InvalidInputData < Exception; end
 
-  version = YAML.load_file(File.dirname(__FILE__) + '/../VERSION.yml')
-  VERSION = [version[:major], version[:minor], version[:patch], version[:build]].compact.join('.')
+  VERSION = '0.2.0'
 
   class << self
     def combinations(*inputs)

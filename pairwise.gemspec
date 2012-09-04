@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
     s.homepage = "http://wiki.github.com/josephwilk/pairwise"
     s.authors = ["Joseph Wilk"]
     s.require_paths = %w[lib]
-    s.files = %w[README.md VERSION.yml] + Dir.glob("{examples,lib,spec}/**/*.rb")
+    s.files = %w[README.md] + Dir.glob("{examples,lib,spec}/**/*.rb")
     s.version = Pairwise::VERSION
 
     s.add_development_dependency 'rspec'
