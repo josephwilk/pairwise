@@ -20,7 +20,7 @@ GEM
       multi_json
       multi_xml
     json (1.7.4)
-    limited_red (0.3.12)
+    limited_red (0.4.2)
       cucumber (>= 1.1.4)
       httparty (= 0.8.1)
     listen (0.4.7)
