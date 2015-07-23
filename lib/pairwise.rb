@@ -12,14 +12,14 @@ require 'pairwise/input_file'
 require 'pairwise/cli'
 
 require 'yaml'
-if RUBY_VERSION != '1.8.7'
+if RUBY_VERSION != '1.8.7' && RUBY_VERSION < '2.2.0'
   YAML::ENGINE.yamler = 'syck' 
 end
 
 module Pairwise
   class InvalidInputData < Exception; end
 
-  VERSION = '0.2.1'
+  VERSION = '0.2.2'
 
   class << self
     def combinations(*inputs)
