@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
     s.version = Pairwise::VERSION
     s.executables  = ['pairwise']
 
+    s.add_dependency 'unicode-display_width'
     s.add_development_dependency 'rspec'
     s.add_development_dependency 'cucumber'
 end

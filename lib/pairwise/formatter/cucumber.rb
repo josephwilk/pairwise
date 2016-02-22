@@ -1,3 +1,5 @@
+require 'unicode/display_width'
+
 module Pairwise
   module Formatter
     class Cucumber
@@ -36,7 +38,8 @@ module Pairwise
       end
 
       def padded_string(string, column)
-        padding_length = max_line_length(column) - string.to_s.length
+        string = string.to_s unless string.is_a? String
+        padding_length = max_line_length(column) - string.display_width
         " #{string} " + (" " * padding_length)
       end
 
