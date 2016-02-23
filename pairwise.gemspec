@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/lib/pairwise'
+require File.dirname(__FILE__) + '/lib/version'
 
 Gem::Specification.new do |s|
     s.name = "pairwise"
