@@ -19,7 +19,7 @@ end
 module Pairwise
   class InvalidInputData < Exception; end
 
-  VERSION = '0.2.2'
+  VERSION = '0.2.3'
 
   class << self
     def combinations(*inputs)
