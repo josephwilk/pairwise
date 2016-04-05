@@ -12,7 +12,7 @@ require 'pairwise/input_file'
 require 'pairwise/cli'
 
 require 'yaml'
-if RUBY_VERSION != '1.8.7' && RUBY_VERSION < '2.2.0'
+if RUBY_VERSION != '1.8.7' && RUBY_VERSION < '2.0.0'
   YAML::ENGINE.yamler = 'syck' 
 end
 
