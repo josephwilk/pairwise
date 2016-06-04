@@ -1,8 +1,9 @@
 Pairwise
 -------
 
-[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/josephwilk/pairwise)
-[![Build Status](https://secure.travis-ci.org/josephwilk/pairwise.png)](http://travis-ci.org/josephwilk/pairwise)
+Pairwise is a Ruby based tool for selecting a smaller number of test input combinations (using pairwise generation) rather than exhaustively testing all possible permutations.
+
+Created by Joseph Wilks, updated by Ali King for newer Rubies
 
 How to use Pairwise: http://josephwilk.github.com/pairwise/
 
@@ -14,4 +15,5 @@ Running tests
 Copyright
 --------
 
-Copyright (c) 2009,2010,2011,2012 Joseph Wilk. See LICENSE for details.
+See LICENSE for details.
+
