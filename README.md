@@ -6,7 +6,7 @@ rather than exhaustively testing all possible permutations.
 
 Created by Joseph Wilks, updated by Ali King for newer Rubies
 
-How to use Pairwise: http://josephwilk.github.com/pairwise/
+How to use Pairwise: http://aliking.github.com/pairwise/
 
 Newer Rubies and Syck vs Psych
 -----------
