@@ -116,3 +116,48 @@ Feature: Generating pairwise data
     | A3 | any_value_of_B | C3 |
 
     """
+
+
+    Scenario: yml with weird inputs that syck would interpret byte-wise, but Psych does not
+      Given I have the yaml file "syck_inputs.yml" containing:
+      """
+      - event with utf8: [\xC3\xA8, \xC3\xA9, \xC3\xAA]
+      - event with latin1: [\xEA, \xE9, \xE8]
+      """
+      When I run pairwise syck_inputs.yml
+      Then it should not show any errors
+      And I should see in the output
+      """
+      | event with utf8 | event with latin1 |
+      | \xC3\xA8        | \xEA              |
+      | \xC3\xA8        | \xE9              |
+      | \xC3\xA8        | \xE8              |
+      | \xC3\xA9        | \xEA              |
+      | \xC3\xA9        | \xE9              |
+      | \xC3\xA9        | \xE8              |
+      | \xC3\xAA        | \xEA              |
+      | \xC3\xAA        | \xE9              |
+      | \xC3\xAA        | \xE8              |
+      """
+
+    Scenario: yml with extended characters that psych can interpret
+      Given I have the yaml file "psych_inputs.yml" containing:
+      """
+      - event with accented: [è, à, ù ]
+      - event with multibyte: ['日', '月', '火']
+      """
+      When I run pairwise psych_inputs.yml
+      Then it should not show any errors
+      And I should see in the output
+      """
+      | event with accented | event with multibyte |
+      | è                   | 日                   |
+      | è                   | 月                   |
+      | è                   | 火                   |
+      | à                   | 日                   |
+      | à                   | 月                   |
+      | à                   | 火                   |
+      | ù                   | 日                   |
+      | ù                   | 月                   |
+      | ù                   | 火                   |
+      """

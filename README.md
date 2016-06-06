@@ -1,17 +1,34 @@
 Pairwise
 -------
 
-[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/josephwilk/pairwise)
-[![Build Status](https://secure.travis-ci.org/josephwilk/pairwise.png)](http://travis-ci.org/josephwilk/pairwise)
+Pairwise is a Ruby based tool for selecting a smaller number of test input combinations (using pairwise generation) 
+rather than exhaustively testing all possible permutations.
 
-How to use Pairwise: http://josephwilk.github.com/pairwise/
+Created by Joseph Wilks, updated by Ali King for newer Rubies
+
+How to use Pairwise: http://aliking.github.com/pairwise/
+
+Newer Rubies and Syck vs Psych
+-----------
+Syck and Psych are YAML serialization libraries. Historically Ruby used syck, now Psych is the default. There are a 
+couple of differences between the two, which are better described here :- http://devblog.arnebrasseur.net/2014-02-yaml-syck-vs-psych
+
+This fork from the original pairwise just removes a directive to use syck and adds some tests for multibyte characters 
+which may have been interpreted differently by the different libraries. 
+
+Also adds unicode-display_width gem to help with formatting - multibyte characters are tricksy.
+
+Tested on ruby 1.8.7-p374 and 2.0.0-p353 as a sampling, but this should be future-proof. 
+
 
 Running tests
 ------------
 <pre><code>rake</code></pre>
 
 
+
 Copyright
 --------
 
-Copyright (c) 2009,2010,2011,2012 Joseph Wilk. See LICENSE for details.
+See LICENSE for details.
+

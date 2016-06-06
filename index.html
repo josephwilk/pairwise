@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Pairwise by josephwilk</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/aliking/pairwise">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/aliking/pairwise/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/aliking/pairwise/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Pairwise</h1>
+          <p>Ruby based tool for selecting a smaller number of test input combinations (using pairwise generation) rather than exhaustively testing all possible permutations.</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/aliking">aliking</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>Pairwise</h1>
+
+<h2>Installing</h2>
+
+<pre><code>gem install pairwise</code></pre>
+
+<h2>Using Pairwise with Rspec</h2>
+
+<div class="highlight"><pre><span class="n">describe</span> <span class="s2">"something"</span> <span class="k">do</span>
+  <span class="no">Pairwise</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="o">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="p">(</span><span class="n">event_id</span><span class="p">,</span> <span class="n">new_event_id</span><span class="p">,</span> <span class="n">media_id</span><span class="p">)</span><span class="o">|</span>
+    <span class="n">it</span> <span class="s2">"should do something with these input values"</span> <span class="k">do</span>
+      <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+
+<h2>Using Pairwise with Cucumber</h2>
+
+<p>Create a yaml file with your input combinations:</p>
+
+<pre><code>event with image: [Football, Basketball, Soccer]
+event without image: [Football, Basketball, Soccer]
+media: [Image, Video, Music]</code></pre>
+
+<p>Run pairwise specifying the yaml file</p>
+
+<pre><code>$ pairwise inputs.yml</code></pre>
+
+<p>This will output a table ready to be used in your Cucumber features.</p>
+
+<pre><code>| media | event without image | event with image |
+| Image | Football            | Football         |
+| Image | Basketball          | Basketball       |
+| Image | Soccer              | Soccer           |
+| Video | Football            | Soccer           |
+| Video | Basketball          | Football         |
+| Video | Soccer              | Basketball       |
+| Music | Football            | Basketball       |
+| Music | Basketball          | Soccer           |
+| Music | Soccer              | Football         |</code></pre>
+
+<h1>Author</h1>
+
+<p><a href="https://github.com/josephwilk" class="user-mention">@josephwilk</a></p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+  </body>
+</html>

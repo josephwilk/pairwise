@@ -8,4 +8,5 @@ group :development,:test do
   gem 'simplecov'
   gem 'guard'
   gem 'guard-rspec'
+  gem 'unicode-display_width'
 end
