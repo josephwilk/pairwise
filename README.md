@@ -23,7 +23,7 @@ Tested on ruby 1.8.7-p374 and 2.0.0-p353 as a sampling, but this should be futur
 
 Running tests
 ------------
-<pre><code>rake</code></pre
+<pre><code>rake</code></pre>
 
 
 
