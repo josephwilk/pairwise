@@ -17,7 +17,7 @@ if RUBY_VERSION != '1.8.7' && RUBY_VERSION < '2.0.0'
 end
 
 module Pairwise
-  class InvalidInputData < Exception; end
+  class InvalidInputData < StandardError; end
 
   VERSION = '0.2.3'
 
